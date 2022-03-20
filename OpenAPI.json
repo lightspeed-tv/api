@@ -1,0 +1,2314 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Lightspeed.tv",
+    "description": "The definite nuts.",
+    "termsOfService": "https://lightspeed.tv/terms",
+    "contact": {
+      "name": "Lightspeed Support",
+      "url": "https://lightspeed.tv",
+      "email": "fredward@lightspeed.tv"
+    },
+    "license": {
+      "name": "Proprietary"
+    },
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.lightspeed.tv",
+      "description": "Lightspeed API"
+    },
+    {
+      "url": "http://localhost:8000",
+      "description": "Local Lightspeed Environment"
+    }
+  ],
+  "paths": {
+    "/regions": {
+      "get": {
+        "tags": [
+          "Regions"
+        ],
+        "summary": "Fetch Regions",
+        "description": "Fetch all streaming regions.",
+        "operationId": "regions_fetch_regions",
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Region"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/streams/": {
+      "get": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "Find Streams",
+        "description": "Find global streams",
+        "operationId": "find_find_streams",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AggregateStream"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "Create Stream",
+        "description": "Enable streaming on a user account.\n\nRequires creating a user first.",
+        "operationId": "create_create_stream",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataCreateStream"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stream"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/streams/@me": {
+      "get": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "Fetch Own Stream",
+        "description": "Fetch own stream information",
+        "operationId": "fetch_fetch_own",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stream"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "Edit Stream",
+        "description": "Edit stream information.",
+        "operationId": "edit_edit_stream",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataEditStream"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stream"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/streams/{path}": {
+      "get": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "Fetch Stream",
+        "description": "Fetch a stream by stream path",
+        "operationId": "fetch_fetch_stream",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AggregateStream"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/streams/reset_token": {
+      "post": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "Reset Stream Token",
+        "description": "Reset the token used for this account's stream.",
+        "operationId": "reset_token_reset",
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stream"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/users/@me": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Fetch Self",
+        "description": "Fetch own user.",
+        "operationId": "fetch_fetch_own",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create User",
+        "description": "Create a new user profile.",
+        "operationId": "create_create_user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataCreateUser"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Edit User",
+        "description": "Edit user information.",
+        "operationId": "edit_edit_user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataEditUser"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/users/{path}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Fetch User",
+        "description": "Fetch user using path.",
+        "operationId": "fetch_fetch_user",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/create": {
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Create Category",
+        "description": "Create a new category of streams.",
+        "operationId": "create_create_category",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataCreateCategory"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/categories/{id}": {
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Delete Category",
+        "description": "Delete a streaming category.",
+        "operationId": "delete_delete_category",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Edit Category",
+        "description": "Change information for an existing category.",
+        "operationId": "edit_edit_category",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataEditCategory"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/categories/": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "List Categories",
+        "description": "List streaming categories available.",
+        "operationId": "list_list_categories",
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chat/{target}/messages": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Fetch History",
+        "description": "Fetch chat message history for a stream.",
+        "operationId": "history_fetch_history",
+        "parameters": [
+          {
+            "name": "target",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Message"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Send Message",
+        "description": "Send a message to a stream chat.",
+        "operationId": "send_send_message",
+        "parameters": [
+          {
+            "name": "target",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataSendMessage"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/chat/{target}/messages/{id}": {
+      "delete": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Delete Message",
+        "description": "Delete a message from chat by its id.",
+        "operationId": "delete_delete_message",
+        "parameters": [
+          {
+            "name": "target",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/auth/account/create": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Create Account",
+        "description": "Create a new account.",
+        "operationId": "create_account_create_account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataCreateAccount"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/auth/account/reverify": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Resend Verification",
+        "description": "Resend account creation verification email.",
+        "operationId": "resend_verification_resend_verification",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataResendVerification"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/auth/account/": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Fetch Account",
+        "description": "Fetch account information from the current session.",
+        "operationId": "fetch_account_fetch_account",
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountInfo"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/auth/account/change/password": {
+      "patch": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Change Password",
+        "description": "Change the current account password.",
+        "operationId": "change_password_change_password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataChangePassword"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/auth/account/change/email": {
+      "patch": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Change Email",
+        "description": "Change the associated account email.",
+        "operationId": "change_email_change_email",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataChangeEmail"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/auth/account/verify/{code}": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Verify Email",
+        "description": "Verify an email address.",
+        "operationId": "verify_email_verify_email",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/auth/account/reset_password": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Send Password Reset",
+        "description": "Send an email to reset account password.",
+        "operationId": "send_password_reset_send_password_reset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataSendPasswordReset"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Password Reset",
+        "description": "Confirm password reset and change the password.",
+        "operationId": "password_reset_password_reset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataPasswordReset"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/auth/session/login": {
+      "post": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Login",
+        "description": "Login to an account.",
+        "operationId": "login_login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataLogin"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseLogin"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/session/logout": {
+      "post": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Logout",
+        "description": "Delete current session.",
+        "operationId": "logout_logout",
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/auth/session/all": {
+      "get": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Fetch Sessions",
+        "description": "Fetch all sessions associated with this account.",
+        "operationId": "fetch_all_fetch_all",
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SessionInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Delete All Sessions",
+        "description": "Delete all active sessions, optionally including current one.",
+        "operationId": "revoke_all_revoke_all",
+        "parameters": [
+          {
+            "name": "revoke_self",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/auth/session/{id}": {
+      "delete": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Revoke Session",
+        "description": "Delete a specific active session.",
+        "operationId": "revoke_revoke",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Edit Session",
+        "description": "Edit current session information.",
+        "operationId": "edit_edit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataEditSession"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Region": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "description": "Internal ID",
+            "type": "string",
+            "nullable": true
+          },
+          "signaling": {
+            "description": "URL to connect to this server's signaling service",
+            "type": "string",
+            "nullable": true
+          },
+          "ingest": {
+            "description": "URI to connect to this server's ingest service",
+            "type": "string",
+            "nullable": true
+          },
+          "location": {
+            "description": "The location of this server",
+            "type": "string",
+            "nullable": true
+          },
+          "last_ping": {
+            "description": "Last ping from this server\n\nIf a server has not sent a ping within the past 30 seconds, assume it to be offline.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DateTimeContainer"
+              }
+            ],
+            "nullable": true
+          }
+        }
+      },
+      "DateTimeContainer": {
+        "description": "Container so we can apply this within Option<>s.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DateTime"
+          }
+        ]
+      },
+      "DateTime": {
+        "description": "Local definition of DateTime from Bson",
+        "type": "integer",
+        "format": "int64"
+      },
+      "Error": {
+        "title": "Error",
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "LabelMe"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "NotFound"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "CategoryNotFound"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "NotModerator"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "InvalidInvite"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "InvalidFile"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "InternalError"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "AlreadyExists"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "UsernameInUse"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "UsernameChangeNotAllowed"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "operation",
+              "type",
+              "with"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "DatabaseError"
+                ]
+              },
+              "operation": {
+                "type": "string"
+              },
+              "with": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "FailedValidation"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "InvalidString"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "InvalidOperation"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "Stream": {
+        "description": "Any user live stream",
+        "type": "object",
+        "properties": {
+          "_id": {
+            "description": "Internal ID",
+            "type": "string",
+            "nullable": true
+          },
+          "ftl_id": {
+            "description": "ID used for FTL protocol",
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "title": {
+            "description": "Stream Title",
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "description": "Stream Tags",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "token": {
+            "description": "Stream Token for FTL",
+            "type": "string",
+            "nullable": true
+          },
+          "live": {
+            "description": "Object providing additional information while live",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Live"
+              }
+            ],
+            "nullable": true
+          },
+          "category": {
+            "description": "ID of category",
+            "default": "default",
+            "type": "string"
+          },
+          "moderators": {
+            "description": "IDs of moderators",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Live": {
+        "description": "Active live stream",
+        "type": "object",
+        "required": [
+          "region",
+          "started_at"
+        ],
+        "properties": {
+          "started_at": {
+            "description": "When this stream started",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DateTimeContainer"
+              }
+            ]
+          },
+          "region": {
+            "description": "Region clients should connect to in order to watch",
+            "type": "string"
+          }
+        }
+      },
+      "DataCreateStream": {
+        "title": "Stream Data",
+        "type": "object",
+        "required": [
+          "invite"
+        ],
+        "properties": {
+          "invite": {
+            "description": "Invite code provided by Lightspeed team",
+            "type": "string"
+          }
+        }
+      },
+      "DataEditStream": {
+        "title": "Stream Data",
+        "type": "object",
+        "properties": {
+          "title": {
+            "description": "Stream title",
+            "type": "string",
+            "maxLength": 60,
+            "minLength": 1,
+            "nullable": true
+          },
+          "tags": {
+            "description": "Stream tags",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 1,
+            "nullable": true
+          },
+          "category": {
+            "description": "Stream category id",
+            "type": "string",
+            "nullable": true
+          },
+          "moderators": {
+            "description": "List of user ids that can moderate stream chat",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "nullable": true
+          }
+        }
+      },
+      "AggregateStream": {
+        "description": "Combined stream information",
+        "type": "object",
+        "required": [
+          "category",
+          "stream",
+          "user"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Internal ID",
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "description": "User information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "stream": {
+            "description": "Stream information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Stream"
+              }
+            ]
+          },
+          "category": {
+            "description": "Category information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Category"
+              }
+            ]
+          },
+          "region": {
+            "description": "Region this stream is currently live in",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Region"
+              }
+            ],
+            "nullable": true
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": [
+          "path",
+          "username"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Internal ID",
+            "type": "string",
+            "nullable": true
+          },
+          "path": {
+            "description": "Path at which this user is accessible",
+            "type": "string"
+          },
+          "username": {
+            "description": "Case-sensitive username",
+            "type": "string"
+          },
+          "avatar": {
+            "description": "ID of avatar file",
+            "type": "string",
+            "nullable": true
+          },
+          "banner": {
+            "description": "ID of banner file",
+            "type": "string",
+            "nullable": true
+          },
+          "bio": {
+            "description": "User profile bio",
+            "type": "string"
+          },
+          "social_links": {
+            "description": "Social links",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SocialLink"
+            }
+          },
+          "privileged": {
+            "description": "Whether this user is privileged",
+            "type": "boolean"
+          }
+        }
+      },
+      "SocialLink": {
+        "type": "object",
+        "required": [
+          "link",
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1
+          },
+          "link": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 3
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Internal ID",
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "description": "Title for this category",
+            "type": "string"
+          },
+          "cover": {
+            "description": "ID of cover picture",
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "description": "Category description",
+            "type": "string"
+          }
+        }
+      },
+      "DataCreateUser": {
+        "title": "User Data",
+        "type": "object",
+        "required": [
+          "username"
+        ],
+        "properties": {
+          "username": {
+            "description": "Username",
+            "type": "string",
+            "pattern": "^[a-z0-9_]{4,25}$"
+          }
+        }
+      },
+      "DataEditUser": {
+        "title": "User Data",
+        "type": "object",
+        "properties": {
+          "username": {
+            "description": "New username",
+            "type": "string",
+            "pattern": "^[a-z0-9_]{4,25}$",
+            "nullable": true
+          },
+          "avatar": {
+            "description": "Attachment Id used for avatar",
+            "type": "string",
+            "nullable": true
+          },
+          "banner": {
+            "description": "Attachment Id used for banner",
+            "type": "string",
+            "nullable": true
+          },
+          "bio": {
+            "description": "Profile bio",
+            "type": "string",
+            "maxLength": 320,
+            "minLength": 0,
+            "nullable": true
+          },
+          "social_links": {
+            "description": "List of social links",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SocialLink"
+            },
+            "maxItems": 5,
+            "minItems": 0,
+            "nullable": true
+          }
+        }
+      },
+      "DataCreateCategory": {
+        "title": "Category Data",
+        "type": "object",
+        "required": [
+          "description",
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "description": "Category title",
+            "type": "string"
+          },
+          "cover": {
+            "description": "Attachment Id for cover photo",
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "description": "Category description",
+            "type": "string"
+          }
+        }
+      },
+      "DataEditCategory": {
+        "title": "Category Data",
+        "type": "object",
+        "properties": {
+          "title": {
+            "description": "Category title",
+            "type": "string",
+            "nullable": true
+          },
+          "cover": {
+            "description": "Attachment Id for category photo",
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "description": "Category description",
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Message": {
+        "type": "object",
+        "required": [
+          "author_id",
+          "content",
+          "stream_id"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Internal ID",
+            "type": "string",
+            "nullable": true
+          },
+          "stream_id": {
+            "description": "Stream ID",
+            "type": "string"
+          },
+          "author": {
+            "description": "User",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "nullable": true
+          },
+          "author_id": {
+            "description": "User ID",
+            "type": "string"
+          },
+          "content": {
+            "description": "Message content",
+            "type": "string"
+          }
+        }
+      },
+      "DataSendMessage": {
+        "title": "Message Data",
+        "type": "object",
+        "required": [
+          "content"
+        ],
+        "properties": {
+          "content": {
+            "description": "Message content",
+            "type": "string",
+            "maxLength": 280,
+            "minLength": 1
+          }
+        }
+      },
+      "DataCreateAccount": {
+        "title": "Account Data",
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "description": "Valid email address",
+            "type": "string"
+          },
+          "password": {
+            "description": "Password",
+            "type": "string"
+          },
+          "invite": {
+            "description": "Invite code",
+            "type": "string",
+            "nullable": true
+          },
+          "captcha": {
+            "description": "Captcha verification code",
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "DataResendVerification": {
+        "title": "Resend Information",
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "description": "Email associated with the account",
+            "type": "string"
+          },
+          "captcha": {
+            "description": "Captcha verification code",
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "AccountInfo": {
+        "type": "object",
+        "required": [
+          "_id",
+          "email"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "DataChangePassword": {
+        "title": "Change Data",
+        "type": "object",
+        "required": [
+          "current_password",
+          "password"
+        ],
+        "properties": {
+          "password": {
+            "description": "New password",
+            "type": "string"
+          },
+          "current_password": {
+            "description": "Current password",
+            "type": "string"
+          }
+        }
+      },
+      "DataChangeEmail": {
+        "title": "Change Data",
+        "type": "object",
+        "required": [
+          "current_password",
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "description": "Valid email address",
+            "type": "string"
+          },
+          "current_password": {
+            "description": "Current password",
+            "type": "string"
+          }
+        }
+      },
+      "DataPasswordReset": {
+        "title": "Password Reset",
+        "type": "object",
+        "required": [
+          "password",
+          "token"
+        ],
+        "properties": {
+          "token": {
+            "description": "Reset token",
+            "type": "string"
+          },
+          "password": {
+            "description": "New password",
+            "type": "string"
+          }
+        }
+      },
+      "DataSendPasswordReset": {
+        "title": "Reset Information",
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "description": "Email associated with the account",
+            "type": "string"
+          },
+          "captcha": {
+            "description": "Captcha verification code",
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ResponseLogin": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "name",
+              "result",
+              "token",
+              "user_id"
+            ],
+            "properties": {
+              "result": {
+                "type": "string",
+                "enum": [
+                  "Success"
+                ]
+              },
+              "_id": {
+                "type": "string",
+                "nullable": true
+              },
+              "user_id": {
+                "type": "string"
+              },
+              "token": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "subscription": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/WebPushSubscription"
+                  }
+                ],
+                "nullable": true
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "result"
+            ],
+            "properties": {
+              "result": {
+                "type": "string",
+                "enum": [
+                  "EmailOTP"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "allowed_methods",
+              "result",
+              "ticket"
+            ],
+            "properties": {
+              "result": {
+                "type": "string",
+                "enum": [
+                  "MFA"
+                ]
+              },
+              "ticket": {
+                "type": "string"
+              },
+              "allowed_methods": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "WebPushSubscription": {
+        "type": "object",
+        "required": [
+          "auth",
+          "endpoint",
+          "p256dh"
+        ],
+        "properties": {
+          "endpoint": {
+            "type": "string"
+          },
+          "p256dh": {
+            "type": "string"
+          },
+          "auth": {
+            "type": "string"
+          }
+        }
+      },
+      "DataLogin": {
+        "title": "Login Data",
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "description": "Email",
+            "type": "string"
+          },
+          "password": {
+            "description": "Password",
+            "type": "string",
+            "nullable": true
+          },
+          "challenge": {
+            "description": "UN-USED: MFA challenge",
+            "type": "string",
+            "nullable": true
+          },
+          "friendly_name": {
+            "description": "Friendly name used for the session",
+            "type": "string",
+            "nullable": true
+          },
+          "captcha": {
+            "description": "Captcha verification code",
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SessionInfo": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Session": {
+        "type": "object",
+        "required": [
+          "name",
+          "token",
+          "user_id"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subscription": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/WebPushSubscription"
+              }
+            ],
+            "nullable": true
+          }
+        }
+      },
+      "DataEditSession": {
+        "title": "Edit Data",
+        "type": "object",
+        "required": [
+          "friendly_name"
+        ],
+        "properties": {
+          "friendly_name": {
+            "description": "Session friendly name",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Api Key": {
+        "description": "Session Token",
+        "type": "apiKey",
+        "name": "x-session-token",
+        "in": "header"
+      }
+    }
+  }
+}
