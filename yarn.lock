@@ -2,14 +2,27 @@
 # yarn lockfile v1
 
 
-"@insertish/oapi@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@insertish/oapi/-/oapi-0.1.5.tgz#beced91154ef3872513add5f9bfad3dff013f396"
-  integrity sha512-dC4XlDG8u9l9oFg6DqDzwlfFa7v2aSPdpl9IiXjMTxlSL1LVAFV5tJA7IIQfdvvuqgTkCoDApuphhwMojiuxXA==
+"@insertish/oapi@^0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@insertish/oapi/-/oapi-0.1.13.tgz#92579172bd6896152e9b68ef5bafcf8cc2048492"
+  integrity sha512-yj1Jk3VlNCjp0hNOsknevyR7PwVzSzc5pbUTuyhtyPlbuHRTv1b9DWs8Ki7xbF/mrIy2DzkHoUu4Ik/Q4oS93w==
   dependencies:
     typescript "^4.6.2"
   optionalDependencies:
     axios "^0.26.1"
+    openapi-typescript "^5.2.0"
+
+"@types/lodash.defaultsdeep@^4.6.6":
+  version "4.6.6"
+  resolved "https://registry.yarnpkg.com/@types/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.6.tgz#d2e87c07ec8d0361e4b79aa000815732b210be04"
+  integrity sha512-k3bXTg1/54Obm6uFEtSwvDm2vCyK9jSROv0V9X3gFFNPu7eKmvqqadPSXx0SkVVixSilR30BxhFlnIj8OavXOA==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.181"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.181.tgz#d1d3740c379fda17ab175165ba04e2d03389385d"
+  integrity sha512-n3tyKthHJbkiWhDZs3DkhkCzt2MexYHXlX0td5iMplyfwketaOeKboEVBqzceH7juqvEg3q5oUoBFxSLu7zFag==
 
 argparse@^2.0.1:
   version "2.0.1"
@@ -44,6 +57,11 @@ js-yaml@^4.1.0:
   integrity sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
   dependencies:
     argparse "^2.0.1"
+
+lodash.defaultsdeep@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.1.tgz#512e9bd721d272d94e3d3a63653fa17516741ca6"
+  integrity sha512-3j8wdDzYuWO3lM3Reg03MuQR957t287Rpcxp1njpEa8oDrikb+FwGdW3n+FELh/A6qib6yPit0j/pv9G/yeAqA==
 
 mime@^3.0.0:
   version "3.0.0"
