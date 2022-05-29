@@ -16,7 +16,7 @@
   },
   "servers": [
     {
-      "url": "https://api.lightspeed.tv",
+      "url": "https://demo.lightspeed.tv",
       "description": "Lightspeed API"
     },
     {
