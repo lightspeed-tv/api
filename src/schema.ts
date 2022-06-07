@@ -32,6 +32,12 @@ export interface paths {
     /** Reset the token used for this account's stream. */
     post: operations["reset_token_reset"];
   };
+  "/streams/{target}/bans/{id}": {
+    /** Permanently ban a user from talking. */
+    put: operations["ban_ban_user"];
+    /** Unban a user. */
+    delete: operations["pardon_pardon_user"];
+  };
   "/users/@me": {
     /** Fetch own user. */
     get: operations["fetch_fetch_own"];
@@ -136,15 +142,14 @@ export interface components {
        *
        * If a server has not sent a ping within the past 30 seconds, assume it to be offline.
        */
-      last_ping?: components["schemas"]["DateTimeContainer"] | null;
+      last_ping?: components["schemas"]["ISO8601 Timestamp"] | null;
     };
-    /** @description Container so we can apply this within Option<>s. */
-    DateTimeContainer: components["schemas"]["DateTime"];
     /**
-     * Format: int64
-     * @description Local definition of DateTime from Bson
+     * Format: date-time
+     * @description ISO8601 formatted timestamp
+     * @example 1970-01-01T00:00:00Z
      */
-    DateTime: number;
+    "ISO8601 Timestamp": string;
     /** Error */
     Error:
       | {
@@ -204,6 +209,16 @@ export interface components {
       | {
           /** @enum {string} */
           type: "InvalidOperation";
+        }
+      | {
+          /** @enum {string} */
+          type: "TooManyRequests";
+          /** Format: uint128 */
+          retry_after: number;
+        }
+      | {
+          /** @enum {string} */
+          type: "Banned";
         };
     /** @description Any user live stream */
     Stream: {
@@ -216,6 +231,10 @@ export interface components {
       ftl_id?: number | null;
       /** @description Stream Title */
       title?: string | null;
+      /** @description Stream Description */
+      description?: string | null;
+      /** @description ID of thumbnail file */
+      thumbnail?: string | null;
       /** @description Stream Tags */
       tags?: string[];
       /** @description Stream Token for FTL */
@@ -229,11 +248,20 @@ export interface components {
       category?: string;
       /** @description IDs of moderators */
       moderators?: string[];
+      /**
+       * @description Whether to record VODs for this stream
+       * @default true
+       */
+      record?: boolean;
+      /** @description RTMP URL to relay the stream to */
+      rtmp_relay?: string | null;
+      /** @description Time at which the last stream ended */
+      last_streamed?: components["schemas"]["ISO8601 Timestamp"] | null;
     };
     /** @description Active live stream */
     Live: {
       /** @description When this stream started */
-      started_at: components["schemas"]["DateTimeContainer"];
+      started_at: components["schemas"]["ISO8601 Timestamp"];
       /** @description Region clients should connect to in order to watch */
       region: string;
     };
@@ -246,12 +274,18 @@ export interface components {
     DataEditStream: {
       /** @description Stream title */
       title?: string | null;
+      /** @description Stream description */
+      description?: string | null;
+      /** @description Attachment Id used for thumbnail */
+      thumbnail?: string | null;
       /** @description Stream tags */
       tags?: string[] | null;
       /** @description Stream category id */
       category?: string | null;
       /** @description List of user ids that can moderate stream chat */
       moderators?: string[] | null;
+      /** @description RTMP Relay */
+      rtmp_relay?: string | null;
     };
     /** @description Combined stream information */
     AggregateStream: {
@@ -281,6 +315,8 @@ export interface components {
       bio?: string;
       /** @description Social links */
       social_links?: components["schemas"]["SocialLink"][];
+      /** @description Accent Colour */
+      accent_colour?: string;
       /** @description Whether this user is privileged */
       privileged?: boolean;
     };
@@ -297,6 +333,19 @@ export interface components {
       cover?: string | null;
       /** @description Category description */
       description?: string;
+    };
+    /** @description Represenation of a chat ban on Lightspeed */
+    Ban: {
+      /** @description Internal ID */
+      _id?: string | null;
+      /** @description Stream ID */
+      stream_id: string;
+      /** @description User ID */
+      user_id: string;
+      /** @description Ban reason */
+      reason?: string;
+      /** @description Time to expire */
+      expires?: components["schemas"]["ISO8601 Timestamp"] | null;
     };
     /** User Data */
     DataCreateUser: {
@@ -315,6 +364,8 @@ export interface components {
       bio?: string | null;
       /** @description List of social links */
       social_links?: components["schemas"]["SocialLink"][] | null;
+      /** @description Accent colour */
+      accent_colour?: string | null;
     };
     /** Category Data */
     DataCreateCategory: {
@@ -570,6 +621,47 @@ export interface operations {
           "application/json": components["schemas"]["Stream"];
         };
       };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Permanently ban a user from talking. */
+  ban_ban_user: {
+    parameters: {
+      path: {
+        target: string;
+        id: string;
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["Ban"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Unban a user. */
+  pardon_pardon_user: {
+    parameters: {
+      path: {
+        target: string;
+        id: string;
+      };
+    };
+    responses: {
+      /** Success */
+      204: never;
       /** An error occurred. */
       default: {
         content: {

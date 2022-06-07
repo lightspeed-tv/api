@@ -30,7 +30,7 @@ type Count<Str extends string, SubStr extends string, Matches extends null[] = [
 export function getPathName(anyPath: string) {
     const segments = anyPath.split('/');
 
-    const list = (pathResolve as unknown as Record<string, (string | [string])[]>)[(segments.length - 1).toString()] ?? [];
+    const list = (pathResolve as unknown as Record<string, (string | [string])[]>)[(segments.length - 1).toString()] || [];
     for (const entry of list) {
         let i = 1;
         let copy = [...segments];
@@ -71,8 +71,8 @@ export class API {
     private authentication: Options['authentication'];
 
     constructor({ baseURL, authentication }: Partial<Options> = { }) {
-        this.baseURL = baseURL ?? defaultBaseURL;
-        this.authentication = authentication ?? { };
+        this.baseURL = baseURL || defaultBaseURL;
+        this.authentication = authentication || { };
     }
 
     /**
@@ -138,14 +138,14 @@ export class API {
 
             // Map each parameter to the correct object.
             for (const parameter of Object.keys(params)) {
-                if (allowed_query.includes(parameter)) {
+                if (allowed_query?.includes(parameter)) {
                     query = {
-                        ...(query ?? {}),
+                        ...(query || {}),
                         [parameter]: (params as Record<any, any>)[parameter]
                     };
                 } else {
                     body = {
-                        ...(body ?? {}),
+                        ...(body || {}),
                         [parameter]: (params as Record<any, any>)[parameter]
                     };
                 }
@@ -185,7 +185,7 @@ export class API {
     }
 
     /**
-     * Send HTTP GET request.
+     * Send HTTP PATCH request.
      * @param path Path
      * @param params Body or Query Parameters
      * @param config Axios configuration

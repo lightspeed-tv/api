@@ -281,6 +281,107 @@
         ]
       }
     },
+    "/streams/{target}/bans/{id}": {
+      "put": {
+        "tags": [
+          "Moderation"
+        ],
+        "summary": "Ban User",
+        "description": "Permanently ban a user from talking.",
+        "operationId": "ban_ban_user",
+        "parameters": [
+          {
+            "name": "target",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ban"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Moderation"
+        ],
+        "summary": "Pardon User",
+        "description": "Unban a user.",
+        "operationId": "pardon_pardon_user",
+        "parameters": [
+          {
+            "name": "target",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
     "/users/@me": {
       "get": {
         "tags": [
@@ -1330,25 +1431,18 @@
             "description": "Last ping from this server\n\nIf a server has not sent a ping within the past 30 seconds, assume it to be offline.",
             "allOf": [
               {
-                "$ref": "#/components/schemas/DateTimeContainer"
+                "$ref": "#/components/schemas/ISO8601 Timestamp"
               }
             ],
             "nullable": true
           }
         }
       },
-      "DateTimeContainer": {
-        "description": "Container so we can apply this within Option<>s.",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/DateTime"
-          }
-        ]
-      },
-      "DateTime": {
-        "description": "Local definition of DateTime from Bson",
-        "type": "integer",
-        "format": "int64"
+      "ISO8601 Timestamp": {
+        "description": "ISO8601 formatted timestamp",
+        "type": "string",
+        "format": "date-time",
+        "example": "1970-01-01T00:00:00Z"
       },
       "Error": {
         "title": "Error",
@@ -1556,6 +1650,40 @@
                 ]
               }
             }
+          },
+          {
+            "type": "object",
+            "required": [
+              "retry_after",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "TooManyRequests"
+                ]
+              },
+              "retry_after": {
+                "type": "integer",
+                "format": "uint128",
+                "minimum": 0.0
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "Banned"
+                ]
+              }
+            }
           }
         ]
       },
@@ -1576,6 +1704,16 @@
           },
           "title": {
             "description": "Stream Title",
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "description": "Stream Description",
+            "type": "string",
+            "nullable": true
+          },
+          "thumbnail": {
+            "description": "ID of thumbnail file",
             "type": "string",
             "nullable": true
           },
@@ -1611,6 +1749,25 @@
             "items": {
               "type": "string"
             }
+          },
+          "record": {
+            "description": "Whether to record VODs for this stream",
+            "default": true,
+            "type": "boolean"
+          },
+          "rtmp_relay": {
+            "description": "RTMP URL to relay the stream to",
+            "type": "string",
+            "nullable": true
+          },
+          "last_streamed": {
+            "description": "Time at which the last stream ended",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISO8601 Timestamp"
+              }
+            ],
+            "nullable": true
           }
         }
       },
@@ -1626,7 +1783,7 @@
             "description": "When this stream started",
             "allOf": [
               {
-                "$ref": "#/components/schemas/DateTimeContainer"
+                "$ref": "#/components/schemas/ISO8601 Timestamp"
               }
             ]
           },
@@ -1660,6 +1817,18 @@
             "minLength": 1,
             "nullable": true
           },
+          "description": {
+            "description": "Stream description",
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "nullable": true
+          },
+          "thumbnail": {
+            "description": "Attachment Id used for thumbnail",
+            "type": "string",
+            "nullable": true
+          },
           "tags": {
             "description": "Stream tags",
             "type": "array",
@@ -1683,6 +1852,11 @@
             },
             "maxItems": 50,
             "minItems": 1,
+            "nullable": true
+          },
+          "rtmp_relay": {
+            "description": "RTMP Relay",
+            "type": "string",
             "nullable": true
           }
         }
@@ -1777,6 +1951,10 @@
               "$ref": "#/components/schemas/SocialLink"
             }
           },
+          "accent_colour": {
+            "description": "Accent Colour",
+            "type": "string"
+          },
           "privileged": {
             "description": "Whether this user is privileged",
             "type": "boolean"
@@ -1825,6 +2003,42 @@
           "description": {
             "description": "Category description",
             "type": "string"
+          }
+        }
+      },
+      "Ban": {
+        "description": "Represenation of a chat ban on Lightspeed",
+        "type": "object",
+        "required": [
+          "stream_id",
+          "user_id"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Internal ID",
+            "type": "string",
+            "nullable": true
+          },
+          "stream_id": {
+            "description": "Stream ID",
+            "type": "string"
+          },
+          "user_id": {
+            "description": "User ID",
+            "type": "string"
+          },
+          "reason": {
+            "description": "Ban reason",
+            "type": "string"
+          },
+          "expires": {
+            "description": "Time to expire",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISO8601 Timestamp"
+              }
+            ],
+            "nullable": true
           }
         }
       },
@@ -1877,6 +2091,13 @@
             },
             "maxItems": 5,
             "minItems": 0,
+            "nullable": true
+          },
+          "accent_colour": {
+            "description": "Accent colour",
+            "type": "string",
+            "maxLength": 24,
+            "minLength": 0,
             "nullable": true
           }
         }
