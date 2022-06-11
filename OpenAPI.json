@@ -17,7 +17,11 @@
   "servers": [
     {
       "url": "https://demo.lightspeed.tv",
-      "description": "Lightspeed API"
+      "description": "Lightspeed API (demo.lightspeed.tv)"
+    },
+    {
+      "url": "https://api.lightspeed.tv",
+      "description": "Lightspeed API (api.lightspeed.tv)"
     },
     {
       "url": "http://localhost:8000",
@@ -353,6 +357,82 @@
           },
           {
             "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/streams/{target}/follow": {
+      "put": {
+        "tags": [
+          "Followers"
+        ],
+        "summary": "Follow Stream",
+        "operationId": "follow_follow_stream",
+        "parameters": [
+          {
+            "name": "target",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Followers"
+        ],
+        "summary": "Follow Stream",
+        "operationId": "unfollow_unfollow_stream",
+        "parameters": [
+          {
+            "name": "target",
             "in": "path",
             "required": true,
             "schema": {
@@ -1907,6 +1987,12 @@
               }
             ],
             "nullable": true
+          },
+          "follower_count": {
+            "description": "Number of followers this stream has",
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
           }
         }
       },
@@ -1958,6 +2044,13 @@
           "privileged": {
             "description": "Whether this user is privileged",
             "type": "boolean"
+          },
+          "following": {
+            "description": "Request only: IDs of streamers this user is following",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },

@@ -38,6 +38,10 @@ export interface paths {
     /** Unban a user. */
     delete: operations["pardon_pardon_user"];
   };
+  "/streams/{target}/follow": {
+    put: operations["follow_follow_stream"];
+    delete: operations["unfollow_unfollow_stream"];
+  };
   "/users/@me": {
     /** Fetch own user. */
     get: operations["fetch_fetch_own"];
@@ -299,6 +303,11 @@ export interface components {
       category: components["schemas"]["Category"];
       /** @description Region this stream is currently live in */
       region?: components["schemas"]["Region"] | null;
+      /**
+       * Format: int64
+       * @description Number of followers this stream has
+       */
+      follower_count?: number | null;
     };
     User: {
       /** @description Internal ID */
@@ -319,6 +328,8 @@ export interface components {
       accent_colour?: string;
       /** @description Whether this user is privileged */
       privileged?: boolean;
+      /** @description Request only: IDs of streamers this user is following */
+      following?: string[];
     };
     SocialLink: {
       title: string;
@@ -657,6 +668,40 @@ export interface operations {
       path: {
         target: string;
         id: string;
+      };
+    };
+    responses: {
+      /** Success */
+      204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  follow_follow_stream: {
+    parameters: {
+      path: {
+        target: string;
+      };
+    };
+    responses: {
+      /** Success */
+      204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  unfollow_unfollow_stream: {
+    parameters: {
+      path: {
+        target: string;
       };
     };
     responses: {

@@ -13,6 +13,10 @@ export type APIRoutes =
 | { method: 'put', path: '-/streams/{target}/bans/{id}', parts: 4, params: undefined, response: paths['/streams/{target}/bans/{id}']['put']['responses']['200']['content']['application/json'] }
 | { method: 'delete', path: `/streams/${string}/bans/${string}`, parts: 4, params: undefined, response: undefined }
 | { method: 'delete', path: '-/streams/{target}/bans/{id}', parts: 4, params: undefined, response: undefined }
+| { method: 'put', path: `/streams/${string}/follow`, parts: 3, params: undefined, response: undefined }
+| { method: 'put', path: '-/streams/{target}/follow', parts: 3, params: undefined, response: undefined }
+| { method: 'delete', path: `/streams/${string}/follow`, parts: 3, params: undefined, response: undefined }
+| { method: 'delete', path: '-/streams/{target}/follow', parts: 3, params: undefined, response: undefined }
 | { method: 'get', path: `/users/@me`, parts: 2, params: undefined, response: paths['/users/@me']['get']['responses']['200']['content']['application/json'] }
 | { method: 'put', path: `/users/@me`, parts: 2, params: paths['/users/@me']['put']['requestBody']['content']['application/json'], response: paths['/users/@me']['put']['responses']['200']['content']['application/json'] }
 | { method: 'patch', path: `/users/@me`, parts: 2, params: paths['/users/@me']['patch']['requestBody']['content']['application/json'], response: paths['/users/@me']['patch']['responses']['200']['content']['application/json'] }
