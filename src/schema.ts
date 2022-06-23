@@ -28,6 +28,10 @@ export interface paths {
     /** Fetch a stream by stream path */
     get: operations["fetch_fetch_stream"];
   };
+  "/streams/{path}/bans": {
+    /** Fetch all banned users in a stream */
+    get: operations["fetch_bans_fetch_bans"];
+  };
   "/streams/reset_token": {
     /** Reset the token used for this account's stream. */
     post: operations["reset_token_reset"];
@@ -53,6 +57,10 @@ export interface paths {
   "/users/{path}": {
     /** Fetch user using path. */
     get: operations["fetch_fetch_user"];
+  };
+  "/users/bans": {
+    /** Fetch all of your bans */
+    get: operations["fetch_bans_fetch_bans"];
   };
   "/categories/create": {
     /** Create a new category of streams. */
@@ -353,9 +361,16 @@ export interface components {
       stream_id: string;
       /** @description User ID */
       user_id: string;
+      /** @description Mod ID */
+      mod_id: string;
       /** @description Ban reason */
       reason?: string;
       /** @description Time to expire */
+      expires?: components["schemas"]["ISO8601 Timestamp"] | null;
+    };
+    /** Ban Data */
+    DataBanUser: {
+      /** @description Time at which this ban expires */
       expires?: components["schemas"]["ISO8601 Timestamp"] | null;
     };
     /** User Data */
@@ -377,6 +392,13 @@ export interface components {
       social_links?: components["schemas"]["SocialLink"][] | null;
       /** @description Accent colour */
       accent_colour?: string | null;
+    };
+    /** @description Information about a user's ban on Lightspeed */
+    BanInformation: {
+      /** @description Stream ID */
+      stream_id: string;
+      /** @description Time to expire */
+      expires?: components["schemas"]["ISO8601 Timestamp"] | null;
     };
     /** Category Data */
     DataCreateCategory: {
@@ -624,6 +646,22 @@ export interface operations {
       };
     };
   };
+  /** Fetch all of your bans */
+  fetch_bans_fetch_bans: {
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["BanInformation"][];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
   /** Reset the token used for this account's stream. */
   reset_token_reset: {
     responses: {
@@ -659,6 +697,11 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["Error"];
         };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DataBanUser"];
       };
     };
   };

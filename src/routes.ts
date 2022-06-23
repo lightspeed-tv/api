@@ -8,9 +8,11 @@ export type APIRoutes =
 | { method: 'patch', path: `/streams/@me`, parts: 2, params: paths['/streams/@me']['patch']['requestBody']['content']['application/json'], response: paths['/streams/@me']['patch']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: `/streams/${string}`, parts: 2, params: undefined, response: paths['/streams/{path}']['get']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: '-/streams/{path}', parts: 2, params: undefined, response: paths['/streams/{path}']['get']['responses']['200']['content']['application/json'] }
+| { method: 'get', path: `/streams/${string}/bans`, parts: 3, params: undefined, response: paths['/streams/{path}/bans']['get']['responses']['200']['content']['application/json'] }
+| { method: 'get', path: '-/streams/{path}/bans', parts: 3, params: undefined, response: paths['/streams/{path}/bans']['get']['responses']['200']['content']['application/json'] }
 | { method: 'post', path: `/streams/reset_token`, parts: 2, params: undefined, response: paths['/streams/reset_token']['post']['responses']['200']['content']['application/json'] }
-| { method: 'put', path: `/streams/${string}/bans/${string}`, parts: 4, params: undefined, response: paths['/streams/{target}/bans/{id}']['put']['responses']['200']['content']['application/json'] }
-| { method: 'put', path: '-/streams/{target}/bans/{id}', parts: 4, params: undefined, response: paths['/streams/{target}/bans/{id}']['put']['responses']['200']['content']['application/json'] }
+| { method: 'put', path: `/streams/${string}/bans/${string}`, parts: 4, params: paths['/streams/{target}/bans/{id}']['put']['requestBody']['content']['application/json'], response: paths['/streams/{target}/bans/{id}']['put']['responses']['200']['content']['application/json'] }
+| { method: 'put', path: '-/streams/{target}/bans/{id}', parts: 4, params: paths['/streams/{target}/bans/{id}']['put']['requestBody']['content']['application/json'], response: paths['/streams/{target}/bans/{id}']['put']['responses']['200']['content']['application/json'] }
 | { method: 'delete', path: `/streams/${string}/bans/${string}`, parts: 4, params: undefined, response: undefined }
 | { method: 'delete', path: '-/streams/{target}/bans/{id}', parts: 4, params: undefined, response: undefined }
 | { method: 'put', path: `/streams/${string}/follow`, parts: 3, params: undefined, response: undefined }
@@ -22,6 +24,7 @@ export type APIRoutes =
 | { method: 'patch', path: `/users/@me`, parts: 2, params: paths['/users/@me']['patch']['requestBody']['content']['application/json'], response: paths['/users/@me']['patch']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: `/users/${string}`, parts: 2, params: undefined, response: paths['/users/{path}']['get']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: '-/users/{path}', parts: 2, params: undefined, response: paths['/users/{path}']['get']['responses']['200']['content']['application/json'] }
+| { method: 'get', path: `/users/bans`, parts: 2, params: undefined, response: paths['/users/bans']['get']['responses']['200']['content']['application/json'] }
 | { method: 'post', path: `/categories/create`, parts: 2, params: paths['/categories/create']['post']['requestBody']['content']['application/json'], response: paths['/categories/create']['post']['responses']['200']['content']['application/json'] }
 | { method: 'delete', path: `/categories/${string}`, parts: 2, params: undefined, response: undefined }
 | { method: 'delete', path: '-/categories/{id}', parts: 2, params: undefined, response: undefined }

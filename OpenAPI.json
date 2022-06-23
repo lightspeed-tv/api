@@ -248,6 +248,56 @@
         }
       }
     },
+    "/streams/{path}/bans": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Fetch Bans",
+        "description": "Fetch all banned users in a stream",
+        "operationId": "fetch_bans_fetch_bans",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ban"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
     "/streams/reset_token": {
       "post": {
         "tags": [
@@ -311,6 +361,16 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataBanUser"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "default": {
             "description": "An error occurred.",
@@ -619,6 +679,46 @@
             }
           }
         }
+      }
+    },
+    "/users/bans": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Fetch Your Bans",
+        "description": "Fetch all of your bans",
+        "operationId": "fetch_bans_fetch_bans",
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BanInformation"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
       }
     },
     "/categories/create": {
@@ -2103,6 +2203,7 @@
         "description": "Represenation of a chat ban on Lightspeed",
         "type": "object",
         "required": [
+          "mod_id",
           "stream_id",
           "user_id"
         ],
@@ -2120,12 +2221,31 @@
             "description": "User ID",
             "type": "string"
           },
+          "mod_id": {
+            "description": "Mod ID",
+            "type": "string"
+          },
           "reason": {
             "description": "Ban reason",
             "type": "string"
           },
           "expires": {
             "description": "Time to expire",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISO8601 Timestamp"
+              }
+            ],
+            "nullable": true
+          }
+        }
+      },
+      "DataBanUser": {
+        "title": "Ban Data",
+        "type": "object",
+        "properties": {
+          "expires": {
+            "description": "Time at which this ban expires",
             "allOf": [
               {
                 "$ref": "#/components/schemas/ISO8601 Timestamp"
@@ -2191,6 +2311,28 @@
             "type": "string",
             "maxLength": 24,
             "minLength": 0,
+            "nullable": true
+          }
+        }
+      },
+      "BanInformation": {
+        "description": "Information about a user's ban on Lightspeed",
+        "type": "object",
+        "required": [
+          "stream_id"
+        ],
+        "properties": {
+          "stream_id": {
+            "description": "Stream ID",
+            "type": "string"
+          },
+          "expires": {
+            "description": "Time to expire",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISO8601 Timestamp"
+              }
+            ],
             "nullable": true
           }
         }
