@@ -335,7 +335,7 @@
         ]
       }
     },
-    "/streams/{target}/bans/{id}": {
+    "/streams/{stream_id}/bans/{user_id}": {
       "put": {
         "tags": [
           "Moderation"
@@ -345,7 +345,7 @@
         "operationId": "ban_ban_user",
         "parameters": [
           {
-            "name": "target",
+            "name": "stream_id",
             "in": "path",
             "required": true,
             "schema": {
@@ -353,7 +353,7 @@
             }
           },
           {
-            "name": "id",
+            "name": "user_id",
             "in": "path",
             "required": true,
             "schema": {
@@ -398,7 +398,9 @@
             "Api Key": []
           }
         ]
-      },
+      }
+    },
+    "/streams/{target}/bans/{id}": {
       "delete": {
         "tags": [
           "Moderation"
@@ -513,6 +515,100 @@
           },
           "204": {
             "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/streams/{stream_id}/mods/{user_id}": {
+      "put": {
+        "tags": [
+          "Moderation"
+        ],
+        "summary": "Promote User to Moderator",
+        "description": "Give a target user moderation powers on a stream.",
+        "operationId": "promote_promote_user",
+        "parameters": [
+          {
+            "name": "stream_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Moderation"
+        ],
+        "summary": "Demote User from Moderator",
+        "description": "Take away a target user's moderation powers on a stream.",
+        "operationId": "demote_demote_user",
+        "parameters": [
+          {
+            "name": "stream_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": ""
           }
         },
         "security": [
@@ -1692,6 +1788,34 @@
               "type": {
                 "type": "string",
                 "enum": [
+                  "AlreadyBanned"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "AlreadyModerator"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
                   "InvalidInvite"
                 ]
               }
@@ -1928,7 +2052,8 @@
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "uniqueItems": true
           },
           "record": {
             "description": "Whether to record VODs for this stream",
@@ -1994,14 +2119,14 @@
             "description": "Stream title",
             "type": "string",
             "maxLength": 60,
-            "minLength": 1,
+            "minLength": 0,
             "nullable": true
           },
           "description": {
             "description": "Stream description",
             "type": "string",
             "maxLength": 2000,
-            "minLength": 1,
+            "minLength": 0,
             "nullable": true
           },
           "thumbnail": {
@@ -2016,22 +2141,12 @@
               "type": "string"
             },
             "maxItems": 10,
-            "minItems": 1,
+            "minItems": 0,
             "nullable": true
           },
           "category": {
             "description": "Stream category id",
             "type": "string",
-            "nullable": true
-          },
-          "moderators": {
-            "description": "List of user ids that can moderate stream chat",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "maxItems": 50,
-            "minItems": 1,
             "nullable": true
           },
           "rtmp_relay": {

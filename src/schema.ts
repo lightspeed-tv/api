@@ -36,15 +36,23 @@ export interface paths {
     /** Reset the token used for this account's stream. */
     post: operations["reset_token_reset"];
   };
-  "/streams/{target}/bans/{id}": {
+  "/streams/{stream_id}/bans/{user_id}": {
     /** Permanently ban a user from talking. */
     put: operations["ban_ban_user"];
+  };
+  "/streams/{target}/bans/{id}": {
     /** Unban a user. */
     delete: operations["pardon_pardon_user"];
   };
   "/streams/{target}/follow": {
     put: operations["follow_follow_stream"];
     delete: operations["unfollow_unfollow_stream"];
+  };
+  "/streams/{stream_id}/mods/{user_id}": {
+    /** Give a target user moderation powers on a stream. */
+    put: operations["promote_promote_user"];
+    /** Take away a target user's moderation powers on a stream. */
+    delete: operations["demote_demote_user"];
   };
   "/users/@me": {
     /** Fetch own user. */
@@ -182,6 +190,14 @@ export interface components {
         }
       | {
           /** @enum {string} */
+          type: "AlreadyBanned";
+        }
+      | {
+          /** @enum {string} */
+          type: "AlreadyModerator";
+        }
+      | {
+          /** @enum {string} */
           type: "InvalidInvite";
         }
       | {
@@ -294,8 +310,6 @@ export interface components {
       tags?: string[] | null;
       /** @description Stream category id */
       category?: string | null;
-      /** @description List of user ids that can moderate stream chat */
-      moderators?: string[] | null;
       /** @description RTMP Relay */
       rtmp_relay?: string | null;
     };
@@ -682,8 +696,8 @@ export interface operations {
   ban_ban_user: {
     parameters: {
       path: {
-        target: string;
-        id: string;
+        stream_id: string;
+        user_id: string;
       };
     };
     responses: {
@@ -750,6 +764,42 @@ export interface operations {
     responses: {
       /** Success */
       204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Give a target user moderation powers on a stream. */
+  promote_promote_user: {
+    parameters: {
+      path: {
+        stream_id: string;
+        user_id: string;
+      };
+    };
+    responses: {
+      200: unknown;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Take away a target user's moderation powers on a stream. */
+  demote_demote_user: {
+    parameters: {
+      path: {
+        stream_id: string;
+        user_id: string;
+      };
+    };
+    responses: {
+      200: unknown;
       /** An error occurred. */
       default: {
         content: {
