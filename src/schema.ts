@@ -102,9 +102,19 @@ export interface paths {
     /** Resend account creation verification email. */
     post: operations["resend_verification_resend_verification"];
   };
+  "/auth/account/delete": {
+    /** Schedule an account for deletion by confirming the received token. */
+    put: operations["confirm_deletion_confirm_deletion"];
+    /** Request to have an account deleted. */
+    post: operations["delete_account_delete_account"];
+  };
   "/auth/account/": {
     /** Fetch account information from the current session. */
     get: operations["fetch_account_fetch_account"];
+  };
+  "/auth/account/disable": {
+    /** Disable an account. */
+    post: operations["disable_account_disable_account"];
   };
   "/auth/account/change/password": {
     /** Change the current account password. */
@@ -143,6 +153,32 @@ export interface paths {
     delete: operations["revoke_revoke"];
     /** Edit current session information. */
     patch: operations["edit_edit"];
+  };
+  "/auth/mfa/ticket": {
+    /** Create a new MFA ticket or validate an existing one. */
+    put: operations["create_ticket_create_ticket"];
+  };
+  "/auth/mfa/": {
+    /** Fetch MFA status of an account. */
+    get: operations["fetch_status_fetch_status"];
+  };
+  "/auth/mfa/recovery": {
+    /** Fetch recovery codes for an account. */
+    post: operations["fetch_recovery_fetch_recovery"];
+    /** Re-generate recovery codes for an account. */
+    patch: operations["generate_recovery_generate_recovery"];
+  };
+  "/auth/mfa/methods": {
+    /** Fetch available MFA methods. */
+    get: operations["get_mfa_methods_get_mfa_methods"];
+  };
+  "/auth/mfa/totp": {
+    /** Generate a new secret for TOTP. */
+    put: operations["totp_enable_totp_enable"];
+    /** Generate a new secret for TOTP. */
+    post: operations["totp_generate_secret_totp_generate_secret"];
+    /** Disable TOTP 2FA for an account. */
+    delete: operations["totp_disable_totp_disable"];
   };
 }
 
@@ -195,6 +231,10 @@ export interface components {
       | {
           /** @enum {string} */
           type: "AlreadyModerator";
+        }
+      | {
+          /** @enum {string} */
+          type: "UserIsNotBanned";
         }
       | {
           /** @enum {string} */
@@ -292,7 +332,17 @@ export interface components {
       started_at: components["schemas"]["ISO8601 Timestamp"];
       /** @description Region clients should connect to in order to watch */
       region: string;
+      /**
+       * @description Enum determining how clients should connect to this live stream
+       * @default Inhouse
+       */
+      controller?: components["schemas"]["Controller"];
     };
+    /**
+     * @description Controller for live stream that clients connect to
+     * @enum {string}
+     */
+    Controller: "Inhouse" | "Mist";
     /** Stream Data */
     DataCreateStream: {
       /** @description Invite code provided by Lightspeed team */
@@ -350,6 +400,8 @@ export interface components {
       accent_colour?: string;
       /** @description Whether this user is privileged */
       privileged?: boolean;
+      /** @description If user and their stream is hidden from public streams (temporary) */
+      hidden?: boolean;
       /** @description Request only: IDs of streamers this user is following */
       following?: string[];
     };
@@ -449,6 +501,99 @@ export interface components {
       /** @description Message content */
       content: string;
     };
+    /** Error */
+    "RAuth Error":
+      | {
+          /** @enum {string} */
+          type: "IncorrectData";
+          with: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "DatabaseError";
+          operation: string;
+          with: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "InternalError";
+        }
+      | {
+          /** @enum {string} */
+          type: "OperationFailed";
+        }
+      | {
+          /** @enum {string} */
+          type: "RenderFail";
+        }
+      | {
+          /** @enum {string} */
+          type: "MissingHeaders";
+        }
+      | {
+          /** @enum {string} */
+          type: "CaptchaFailed";
+        }
+      | {
+          /** @enum {string} */
+          type: "InvalidSession";
+        }
+      | {
+          /** @enum {string} */
+          type: "UnverifiedAccount";
+        }
+      | {
+          /** @enum {string} */
+          type: "UnknownUser";
+        }
+      | {
+          /** @enum {string} */
+          type: "EmailFailed";
+        }
+      | {
+          /** @enum {string} */
+          type: "InvalidToken";
+        }
+      | {
+          /** @enum {string} */
+          type: "MissingInvite";
+        }
+      | {
+          /** @enum {string} */
+          type: "InvalidInvite";
+        }
+      | {
+          /** @enum {string} */
+          type: "InvalidCredentials";
+        }
+      | {
+          /** @enum {string} */
+          type: "CompromisedPassword";
+        }
+      | {
+          /** @enum {string} */
+          type: "DisabledAccount";
+        }
+      | {
+          /** @enum {string} */
+          type: "ShortPassword";
+        }
+      | {
+          /** @enum {string} */
+          type: "Blacklisted";
+        }
+      | {
+          /** @enum {string} */
+          type: "LockedOut";
+        }
+      | {
+          /** @enum {string} */
+          type: "TotpAlreadyEnabled";
+        }
+      | {
+          /** @enum {string} */
+          type: "DisallowedMFAMethod";
+        };
     /** Account Data */
     DataCreateAccount: {
       /** @description Valid email address */
@@ -466,6 +611,11 @@ export interface components {
       email: string;
       /** @description Captcha verification code */
       captcha?: string | null;
+    };
+    /** Account Deletion Token */
+    DataAccountDeletion: {
+      /** @description Deletion token */
+      token: string;
     };
     AccountInfo: {
       _id: string;
@@ -485,12 +635,34 @@ export interface components {
       /** @description Current password */
       current_password: string;
     };
+    ResponseVerify: Partial<unknown> &
+      Partial<{
+        /** @description Authorised MFA ticket, can be used to log in */
+        ticket: components["schemas"]["MFATicket"];
+      }>;
+    /** @description Multi-factor auth ticket */
+    MFATicket: {
+      /** @description Unique Id */
+      _id: string;
+      /** @description Account Id */
+      account_id: string;
+      /** @description Unique Token */
+      token: string;
+      /** @description Whether this ticket has been validated (can be used for account actions) */
+      validated: boolean;
+      /** @description Whether this ticket is authorised (can be used to log a user in) */
+      authorised: boolean;
+      /** @description TOTP code at time of ticket creation */
+      last_totp_code?: string | null;
+    };
     /** Password Reset */
     DataPasswordReset: {
       /** @description Reset token */
       token: string;
       /** @description New password */
       password: string;
+      /** @description Whether to logout all sessions */
+      remove_sessions?: boolean;
     };
     /** Reset Information */
     DataSendPasswordReset: {
@@ -503,55 +675,89 @@ export interface components {
       | {
           /** @enum {string} */
           result: "Success";
-          _id?: string | null;
+          /** @description Unique Id */
+          _id: string;
+          /** @description User Id */
           user_id: string;
+          /** @description Session token */
           token: string;
+          /** @description Display name */
           name: string;
+          /** @description Web Push subscription */
           subscription?: components["schemas"]["WebPushSubscription"] | null;
-        }
-      | {
-          /** @enum {string} */
-          result: "EmailOTP";
         }
       | {
           /** @enum {string} */
           result: "MFA";
           ticket: string;
-          allowed_methods: string[];
+          allowed_methods: components["schemas"]["MFAMethod"][];
         };
+    /** @description Web Push subscription */
     WebPushSubscription: {
       endpoint: string;
       p256dh: string;
       auth: string;
     };
+    /**
+     * @description MFA method
+     * @enum {string}
+     */
+    MFAMethod: "Password" | "Recovery" | "Totp";
     /** Login Data */
-    DataLogin: {
+    DataLogin: Partial<{
       /** @description Email */
       email: string;
       /** @description Password */
-      password?: string | null;
-      /** @description UN-USED: MFA challenge */
-      challenge?: string | null;
+      password: string;
       /** @description Friendly name used for the session */
       friendly_name?: string | null;
-      /** @description Captcha verification code */
-      captcha?: string | null;
-    };
+    }> &
+      Partial<{
+        /**
+         * @description Unvalidated or authorised MFA ticket
+         *
+         * Used to resolve the correct account
+         */
+        mfa_ticket: string;
+        /**
+         * @description Valid MFA response
+         *
+         * This will take precedence over the `password` field where applicable
+         */
+        mfa_response?: components["schemas"]["MFAResponse"] | null;
+        /** @description Friendly name used for the session */
+        friendly_name?: string | null;
+      }>;
+    /** @description MFA response */
+    MFAResponse: Partial<{
+      password: string;
+    }> &
+      Partial<{
+        recovery_code: string;
+      }> &
+      Partial<{
+        totp_code: string;
+      }>;
     SessionInfo: {
       _id: string;
       name: string;
-    };
-    Session: {
-      _id?: string | null;
-      user_id: string;
-      token: string;
-      name: string;
-      subscription?: components["schemas"]["WebPushSubscription"] | null;
     };
     /** Edit Data */
     DataEditSession: {
       /** @description Session friendly name */
       friendly_name: string;
+    };
+    MultiFactorStatus: {
+      email_otp: boolean;
+      trusted_handover: boolean;
+      email_mfa: boolean;
+      totp_mfa: boolean;
+      security_key_mfa: boolean;
+      recovery_active: boolean;
+    };
+    /** Totp Secret */
+    ResponseTotpSecret: {
+      secret: string;
     };
   };
 }
@@ -1054,6 +1260,37 @@ export interface operations {
       };
     };
   };
+  /** Schedule an account for deletion by confirming the received token. */
+  confirm_deletion_confirm_deletion: {
+    responses: {
+      /** Success */
+      204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DataAccountDeletion"];
+      };
+    };
+  };
+  /** Request to have an account deleted. */
+  delete_account_delete_account: {
+    responses: {
+      /** Success */
+      204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
   /** Fetch account information from the current session. */
   fetch_account_fetch_account: {
     responses: {
@@ -1062,6 +1299,19 @@ export interface operations {
           "application/json": components["schemas"]["AccountInfo"];
         };
       };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Disable an account. */
+  disable_account_disable_account: {
+    responses: {
+      /** Success */
+      204: never;
       /** An error occurred. */
       default: {
         content: {
@@ -1114,8 +1364,11 @@ export interface operations {
       };
     };
     responses: {
-      /** Success */
-      204: never;
+      200: {
+        content: {
+          "application/json": components["schemas"]["ResponseVerify"];
+        };
+      };
       /** An error occurred. */
       default: {
         content: {
@@ -1256,7 +1509,7 @@ export interface operations {
     responses: {
       200: {
         content: {
-          "application/json": components["schemas"]["Session"];
+          "application/json": components["schemas"]["SessionInfo"];
         };
       };
       /** An error occurred. */
@@ -1269,6 +1522,132 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["DataEditSession"];
+      };
+    };
+  };
+  /** Create a new MFA ticket or validate an existing one. */
+  create_ticket_create_ticket: {
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["MFATicket"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["MFAResponse"];
+      };
+    };
+  };
+  /** Fetch MFA status of an account. */
+  fetch_status_fetch_status: {
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["MultiFactorStatus"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Fetch recovery codes for an account. */
+  fetch_recovery_fetch_recovery: {
+    responses: {
+      200: {
+        content: {
+          "application/json": string[];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Re-generate recovery codes for an account. */
+  generate_recovery_generate_recovery: {
+    responses: {
+      200: {
+        content: {
+          "application/json": string[];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Fetch available MFA methods. */
+  get_mfa_methods_get_mfa_methods: {
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["MFAMethod"][];
+        };
+      };
+    };
+  };
+  /** Generate a new secret for TOTP. */
+  totp_enable_totp_enable: {
+    responses: {
+      /** Success */
+      204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["MFAResponse"];
+      };
+    };
+  };
+  /** Generate a new secret for TOTP. */
+  totp_generate_secret_totp_generate_secret: {
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["ResponseTotpSecret"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Disable TOTP 2FA for an account. */
+  totp_disable_totp_disable: {
+    responses: {
+      /** Success */
+      204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
       };
     };
   };
