@@ -233,18 +233,19 @@ export class API {
      * @param config Axios configuration
      * @returns Typed Response Data
      */
-    delete<Path extends DeleteRoutes['path'], Route extends DeleteRoutes & { path: Path, parts: Count<Path, '/'> }>(path: Path, config?: AxiosRequestConfig): Promise<Route['response']>;
+    delete<Path extends DeleteRoutes['path'], Route extends DeleteRoutes & { path: Path, parts: Count<Path, '/'> }>(path: Path, params?: any, config?: AxiosRequestConfig): Promise<Route['response']>;
     
     /**
      * Send HTTP DELETE request.
      * @param path Path
+     * @param params Body or Query Parameters
      * @returns Typed Response Data
      */
-    delete<Path extends (DeleteRoutes & { params: undefined })['path'], Route extends DeleteRoutes & { path: Path, parts: Count<Path, '/'> }>(path: Path): Promise<Route['response']>;
+    delete<Path extends (DeleteRoutes & { params: undefined })['path'], Route extends DeleteRoutes & { path: Path, parts: Count<Path, '/'> }>(path: Path, params?: any): Promise<Route['response']>;
 
-    delete(path: any, config?: AxiosRequestConfig): Promise<any> {
+    delete(path: any, params?: any, config?: AxiosRequestConfig): Promise<any> {
         // @ts-ignore-next-line
-        return this.req('delete', path, undefined, config);
+        return this.req('delete', path, params, config);
     }
 
     /**
