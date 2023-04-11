@@ -31,7 +31,9 @@
   "paths": {
     "/regions": {
       "get": {
-        "tags": ["Regions"],
+        "tags": [
+          "Regions"
+        ],
         "summary": "Fetch Regions",
         "description": "Fetch all streaming regions.",
         "operationId": "regions_fetch_regions",
@@ -64,7 +66,9 @@
     },
     "/streams/": {
       "get": {
-        "tags": ["Streams"],
+        "tags": [
+          "Streams"
+        ],
         "summary": "Find Streams",
         "description": "Find global streams",
         "operationId": "find_find_streams",
@@ -85,7 +89,9 @@
         }
       },
       "put": {
-        "tags": ["Streams"],
+        "tags": [
+          "Streams"
+        ],
         "summary": "Create Stream",
         "description": "Enable streaming on a user account.\n\nRequires creating a user first.",
         "operationId": "create_create_stream",
@@ -130,7 +136,9 @@
     },
     "/streams/@me": {
       "get": {
-        "tags": ["Streams"],
+        "tags": [
+          "Streams"
+        ],
         "summary": "Fetch Own Stream",
         "description": "Fetch own stream information",
         "operationId": "fetch_fetch_own",
@@ -153,7 +161,9 @@
         ]
       },
       "patch": {
-        "tags": ["Streams"],
+        "tags": [
+          "Streams"
+        ],
         "summary": "Edit Stream",
         "description": "Edit stream information.",
         "operationId": "edit_edit_stream",
@@ -198,7 +208,9 @@
     },
     "/streams/{path}": {
       "get": {
-        "tags": ["Streams"],
+        "tags": [
+          "Streams"
+        ],
         "summary": "Fetch Stream",
         "description": "Fetch a stream by stream path",
         "operationId": "fetch_fetch_stream",
@@ -238,7 +250,9 @@
     },
     "/streams/{path}/bans": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Fetch Bans",
         "description": "Fetch all banned users in a stream",
         "operationId": "fetch_bans_fetch_bans",
@@ -286,7 +300,9 @@
     },
     "/streams/reset_token": {
       "post": {
-        "tags": ["Streams"],
+        "tags": [
+          "Streams"
+        ],
         "summary": "Reset Stream Token",
         "description": "Reset the token used for this account's stream.",
         "operationId": "reset_token_reset",
@@ -321,7 +337,9 @@
     },
     "/streams/{stream_id}/bans/{user_id}": {
       "put": {
-        "tags": ["Moderation"],
+        "tags": [
+          "Moderation"
+        ],
         "summary": "Ban User",
         "description": "Permanently ban a user from talking.",
         "operationId": "ban_ban_user",
@@ -384,7 +402,9 @@
     },
     "/streams/{target}/bans/{id}": {
       "delete": {
-        "tags": ["Moderation"],
+        "tags": [
+          "Moderation"
+        ],
         "summary": "Pardon User",
         "description": "Unban a user.",
         "operationId": "pardon_pardon_user",
@@ -430,7 +450,9 @@
     },
     "/streams/{target}/follow": {
       "put": {
-        "tags": ["Followers"],
+        "tags": [
+          "Followers"
+        ],
         "summary": "Follow Stream",
         "operationId": "follow_follow_stream",
         "parameters": [
@@ -465,7 +487,9 @@
         ]
       },
       "delete": {
-        "tags": ["Followers"],
+        "tags": [
+          "Followers"
+        ],
         "summary": "Follow Stream",
         "operationId": "unfollow_unfollow_stream",
         "parameters": [
@@ -502,7 +526,9 @@
     },
     "/streams/{stream_id}/mods/{user_id}": {
       "put": {
-        "tags": ["Moderation"],
+        "tags": [
+          "Moderation"
+        ],
         "summary": "Promote User to Moderator",
         "description": "Give a target user moderation powers on a stream.",
         "operationId": "promote_promote_user",
@@ -546,7 +572,9 @@
         ]
       },
       "delete": {
-        "tags": ["Moderation"],
+        "tags": [
+          "Moderation"
+        ],
         "summary": "Demote User from Moderator",
         "description": "Take away a target user's moderation powers on a stream.",
         "operationId": "demote_demote_user",
@@ -592,7 +620,9 @@
     },
     "/users/@me": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Fetch Self",
         "description": "Fetch own user.",
         "operationId": "fetch_fetch_own",
@@ -615,7 +645,9 @@
         ]
       },
       "put": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Create User",
         "description": "Create a new user profile.",
         "operationId": "create_create_user",
@@ -658,7 +690,9 @@
         ]
       },
       "patch": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Edit User",
         "description": "Edit user information.",
         "operationId": "edit_edit_user",
@@ -703,7 +737,9 @@
     },
     "/users/{path}": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Fetch User",
         "description": "Fetch user using path.",
         "operationId": "fetch_fetch_user",
@@ -743,7 +779,9 @@
     },
     "/users/bans": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Fetch Your Bans",
         "description": "Fetch all of your bans",
         "operationId": "fetch_bans_fetch_bans",
@@ -781,7 +819,9 @@
     },
     "/categories/create": {
       "post": {
-        "tags": ["Categories"],
+        "tags": [
+          "Categories"
+        ],
         "summary": "Create Category",
         "description": "Create a new category of streams.",
         "operationId": "create_create_category",
@@ -826,7 +866,9 @@
     },
     "/categories/{id}": {
       "delete": {
-        "tags": ["Categories"],
+        "tags": [
+          "Categories"
+        ],
         "summary": "Delete Category",
         "description": "Delete a streaming category.",
         "operationId": "delete_delete_category",
@@ -862,7 +904,9 @@
         ]
       },
       "patch": {
-        "tags": ["Categories"],
+        "tags": [
+          "Categories"
+        ],
         "summary": "Edit Category",
         "description": "Change information for an existing category.",
         "operationId": "edit_edit_category",
@@ -917,7 +961,9 @@
     },
     "/categories/": {
       "get": {
-        "tags": ["Categories"],
+        "tags": [
+          "Categories"
+        ],
         "summary": "List Categories",
         "description": "List streaming categories available.",
         "operationId": "list_list_categories",
@@ -950,7 +996,9 @@
     },
     "/chat/{target}/messages": {
       "get": {
-        "tags": ["Chat"],
+        "tags": [
+          "Chat"
+        ],
         "summary": "Fetch History",
         "description": "Fetch chat message history for a stream.",
         "operationId": "history_fetch_history",
@@ -991,7 +1039,9 @@
         }
       },
       "post": {
-        "tags": ["Chat"],
+        "tags": [
+          "Chat"
+        ],
         "summary": "Send Message",
         "description": "Send a message to a stream chat.",
         "operationId": "send_send_message",
@@ -1046,7 +1096,9 @@
     },
     "/chat/{target}/messages/{id}": {
       "delete": {
-        "tags": ["Chat"],
+        "tags": [
+          "Chat"
+        ],
         "summary": "Delete Message",
         "description": "Delete a message from chat by its id.",
         "operationId": "delete_delete_message",
@@ -1090,9 +1142,290 @@
         ]
       }
     },
+    "/admin/invites": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "List Stream Invites",
+        "description": "List all pending and used stream invites.",
+        "operationId": "list_stream_invites_list_stream_invites",
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InviteInformation"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Create Stream Invite",
+        "description": "Create a new invite for streaming.",
+        "operationId": "create_stream_invite_create_stream_invite",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataCreateInvite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/admin/invites/{code}": {
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Delete Stream Invite",
+        "description": "Delete an existing unclaimed stream invite.",
+        "operationId": "delete_stream_invite_delete_stream_invite",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/admin/streams/{stream_id}": {
+      "patch": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Edit Stream",
+        "description": "Edit stream information.",
+        "operationId": "edit_stream_edit_stream",
+        "parameters": [
+          {
+            "name": "stream_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataEditStream"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stream"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/admin/users/{user_id}": {
+      "patch": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Edit User",
+        "description": "Edit user information.",
+        "operationId": "edit_user_edit_user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataEditUser"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/admin/streams/{stream_id}/stop": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Stop Stream",
+        "description": "Disconnect all users from a stream and stop it.",
+        "operationId": "stop_stream_stop_stream",
+        "parameters": [
+          {
+            "name": "stream_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stream"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
     "/auth/account/create": {
       "post": {
-        "tags": ["Account"],
+        "tags": [
+          "Account"
+        ],
         "summary": "Create Account",
         "description": "Create a new account.",
         "operationId": "create_account_create_account",
@@ -1125,7 +1458,9 @@
     },
     "/auth/account/reverify": {
       "post": {
-        "tags": ["Account"],
+        "tags": [
+          "Account"
+        ],
         "summary": "Resend Verification",
         "description": "Resend account creation verification email.",
         "operationId": "resend_verification_resend_verification",
@@ -1158,7 +1493,9 @@
     },
     "/auth/account/delete": {
       "put": {
-        "tags": ["Account"],
+        "tags": [
+          "Account"
+        ],
         "summary": "Confirm Account Deletion",
         "description": "Schedule an account for deletion by confirming the received token.",
         "operationId": "confirm_deletion_confirm_deletion",
@@ -1189,7 +1526,9 @@
         }
       },
       "post": {
-        "tags": ["Account"],
+        "tags": [
+          "Account"
+        ],
         "summary": "Delete Account",
         "description": "Request to have an account deleted.",
         "operationId": "delete_account_delete_account",
@@ -1220,7 +1559,9 @@
     },
     "/auth/account/": {
       "get": {
-        "tags": ["Account"],
+        "tags": [
+          "Account"
+        ],
         "summary": "Fetch Account",
         "description": "Fetch account information from the current session.",
         "operationId": "fetch_account_fetch_account",
@@ -1255,7 +1596,9 @@
     },
     "/auth/account/disable": {
       "post": {
-        "tags": ["Account"],
+        "tags": [
+          "Account"
+        ],
         "summary": "Disable Account",
         "description": "Disable an account.",
         "operationId": "disable_account_disable_account",
@@ -1286,7 +1629,9 @@
     },
     "/auth/account/change/password": {
       "patch": {
-        "tags": ["Account"],
+        "tags": [
+          "Account"
+        ],
         "summary": "Change Password",
         "description": "Change the current account password.",
         "operationId": "change_password_change_password",
@@ -1324,7 +1669,9 @@
     },
     "/auth/account/change/email": {
       "patch": {
-        "tags": ["Account"],
+        "tags": [
+          "Account"
+        ],
         "summary": "Change Email",
         "description": "Change the associated account email.",
         "operationId": "change_email_change_email",
@@ -1362,7 +1709,9 @@
     },
     "/auth/account/verify/{code}": {
       "post": {
-        "tags": ["Account"],
+        "tags": [
+          "Account"
+        ],
         "summary": "Verify Email",
         "description": "Verify an email address.",
         "operationId": "verify_email_verify_email",
@@ -1402,7 +1751,9 @@
     },
     "/auth/account/reset_password": {
       "post": {
-        "tags": ["Account"],
+        "tags": [
+          "Account"
+        ],
         "summary": "Send Password Reset",
         "description": "Send an email to reset account password.",
         "operationId": "send_password_reset_send_password_reset",
@@ -1433,7 +1784,9 @@
         }
       },
       "patch": {
-        "tags": ["Account"],
+        "tags": [
+          "Account"
+        ],
         "summary": "Password Reset",
         "description": "Confirm password reset and change the password.",
         "operationId": "password_reset_password_reset",
@@ -1466,7 +1819,9 @@
     },
     "/auth/session/login": {
       "post": {
-        "tags": ["Session"],
+        "tags": [
+          "Session"
+        ],
         "summary": "Login",
         "description": "Login to an account.",
         "operationId": "login_login",
@@ -1506,7 +1861,9 @@
     },
     "/auth/session/logout": {
       "post": {
-        "tags": ["Session"],
+        "tags": [
+          "Session"
+        ],
         "summary": "Logout",
         "description": "Delete current session.",
         "operationId": "logout_logout",
@@ -1534,7 +1891,9 @@
     },
     "/auth/session/all": {
       "get": {
-        "tags": ["Session"],
+        "tags": [
+          "Session"
+        ],
         "summary": "Fetch Sessions",
         "description": "Fetch all sessions associated with this account.",
         "operationId": "fetch_all_fetch_all",
@@ -1570,7 +1929,9 @@
         ]
       },
       "delete": {
-        "tags": ["Session"],
+        "tags": [
+          "Session"
+        ],
         "summary": "Delete All Sessions",
         "description": "Delete all active sessions, optionally including current one.",
         "operationId": "revoke_all_revoke_all",
@@ -1602,13 +1963,18 @@
         "security": [
           {
             "Session Token": []
+          },
+          {
+            "Session Token": []
           }
         ]
       }
     },
     "/auth/session/{id}": {
       "delete": {
-        "tags": ["Session"],
+        "tags": [
+          "Session"
+        ],
         "summary": "Revoke Session",
         "description": "Delete a specific active session.",
         "operationId": "revoke_revoke",
@@ -1644,7 +2010,9 @@
         ]
       },
       "patch": {
-        "tags": ["Session"],
+        "tags": [
+          "Session"
+        ],
         "summary": "Edit Session",
         "description": "Edit current session information.",
         "operationId": "edit_edit",
@@ -1699,7 +2067,9 @@
     },
     "/auth/mfa/ticket": {
       "put": {
-        "tags": ["MFA"],
+        "tags": [
+          "MFA"
+        ],
         "summary": "Create MFA ticket",
         "description": "Create a new MFA ticket or validate an existing one.",
         "operationId": "create_ticket_create_ticket",
@@ -1747,7 +2117,9 @@
     },
     "/auth/mfa/": {
       "get": {
-        "tags": ["MFA"],
+        "tags": [
+          "MFA"
+        ],
         "summary": "MFA Status",
         "description": "Fetch MFA status of an account.",
         "operationId": "fetch_status_fetch_status",
@@ -1782,7 +2154,9 @@
     },
     "/auth/mfa/recovery": {
       "post": {
-        "tags": ["MFA"],
+        "tags": [
+          "MFA"
+        ],
         "summary": "Fetch Recovery Codes",
         "description": "Fetch recovery codes for an account.",
         "operationId": "fetch_recovery_fetch_recovery",
@@ -1821,7 +2195,9 @@
         ]
       },
       "patch": {
-        "tags": ["MFA"],
+        "tags": [
+          "MFA"
+        ],
         "summary": "Generate Recovery Codes",
         "description": "Re-generate recovery codes for an account.",
         "operationId": "generate_recovery_generate_recovery",
@@ -1862,7 +2238,9 @@
     },
     "/auth/mfa/methods": {
       "get": {
-        "tags": ["MFA"],
+        "tags": [
+          "MFA"
+        ],
         "summary": "Get MFA Methods",
         "description": "Fetch available MFA methods.",
         "operationId": "get_mfa_methods_get_mfa_methods",
@@ -1890,7 +2268,9 @@
     },
     "/auth/mfa/totp": {
       "put": {
-        "tags": ["MFA"],
+        "tags": [
+          "MFA"
+        ],
         "summary": "Enable TOTP 2FA",
         "description": "Generate a new secret for TOTP.",
         "operationId": "totp_enable_totp_enable",
@@ -1926,7 +2306,9 @@
         ]
       },
       "post": {
-        "tags": ["MFA"],
+        "tags": [
+          "MFA"
+        ],
         "summary": "Generate TOTP Secret",
         "description": "Generate a new secret for TOTP.",
         "operationId": "totp_generate_secret_totp_generate_secret",
@@ -1962,7 +2344,9 @@
         ]
       },
       "delete": {
-        "tags": ["MFA"],
+        "tags": [
+          "MFA"
+        ],
         "summary": "Disable TOTP 2FA",
         "description": "Disable TOTP 2FA for an account.",
         "operationId": "totp_disable_totp_disable",
@@ -1999,6 +2383,11 @@
         "properties": {
           "_id": {
             "description": "Internal ID",
+            "type": "string",
+            "nullable": true
+          },
+          "hostname": {
+            "description": "Publicly accessible server hostname",
             "type": "string",
             "nullable": true
           },
@@ -2039,141 +2428,213 @@
         "oneOf": [
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["LabelMe"]
+                "enum": [
+                  "LabelMe"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["NotFound"]
+                "enum": [
+                  "NotFound"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["CategoryNotFound"]
+                "enum": [
+                  "CategoryNotFound"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["NotModerator"]
+                "enum": [
+                  "NotModerator"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["AlreadyBanned"]
+                "enum": [
+                  "AlreadyBanned"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["AlreadyModerator"]
+                "enum": [
+                  "AlreadyModerator"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["UserIsNotBanned"]
+                "enum": [
+                  "UserIsNotBanned"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["InvalidInvite"]
+                "enum": [
+                  "InvalidInvite"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["InvalidFile"]
+                "enum": [
+                  "InvalidFile"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["InternalError"]
+                "enum": [
+                  "InternalError"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["AlreadyExists"]
+                "enum": [
+                  "BadGateway"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["UsernameInUse"]
+                "enum": [
+                  "AlreadyExists"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["UsernameChangeNotAllowed"]
+                "enum": [
+                  "UsernameInUse"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["operation", "type", "with"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["DatabaseError"]
+                "enum": [
+                  "UsernameChangeNotAllowed"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "operation",
+              "type",
+              "with"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "DatabaseError"
+                ]
               },
               "operation": {
                 "type": "string"
@@ -2185,41 +2646,58 @@
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["FailedValidation"]
+                "enum": [
+                  "FailedValidation"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["InvalidString"]
+                "enum": [
+                  "InvalidString"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["InvalidOperation"]
+                "enum": [
+                  "InvalidOperation"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["retry_after", "type"],
+            "required": [
+              "retry_after",
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["TooManyRequests"]
+                "enum": [
+                  "TooManyRequests"
+                ]
               },
               "retry_after": {
                 "type": "integer",
@@ -2230,11 +2708,15 @@
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["Banned"]
+                "enum": [
+                  "Banned"
+                ]
               }
             }
           }
@@ -2309,6 +2791,11 @@
             "default": true,
             "type": "boolean"
           },
+          "suspended": {
+            "description": "Whether this stream is currently prohibited from going live",
+            "default": false,
+            "type": "boolean"
+          },
           "rtmp_relay": {
             "description": "RTMP URL to relay the stream to",
             "type": "string",
@@ -2328,7 +2815,10 @@
       "Live": {
         "description": "Active live stream",
         "type": "object",
-        "required": ["region", "started_at"],
+        "required": [
+          "region",
+          "started_at"
+        ],
         "properties": {
           "started_at": {
             "description": "When this stream started",
@@ -2356,12 +2846,17 @@
       "Controller": {
         "description": "Controller for live stream that clients connect to",
         "type": "string",
-        "enum": ["Inhouse", "Mist"]
+        "enum": [
+          "Inhouse",
+          "Mist"
+        ]
       },
       "DataCreateStream": {
         "title": "Stream Data",
         "type": "object",
-        "required": ["invite"],
+        "required": [
+          "invite"
+        ],
         "properties": {
           "invite": {
             "description": "Invite code provided by Lightspeed team",
@@ -2411,13 +2906,22 @@
             "description": "RTMP Relay",
             "type": "string",
             "nullable": true
+          },
+          "suspended": {
+            "description": "Whether this stream is prohibited from going live",
+            "type": "boolean",
+            "nullable": true
           }
         }
       },
       "AggregateStream": {
         "description": "Combined stream information",
         "type": "object",
-        "required": ["category", "stream", "user"],
+        "required": [
+          "category",
+          "stream",
+          "user"
+        ],
         "properties": {
           "_id": {
             "description": "Internal ID",
@@ -2467,7 +2971,10 @@
       },
       "User": {
         "type": "object",
-        "required": ["path", "username"],
+        "required": [
+          "path",
+          "username"
+        ],
         "properties": {
           "_id": {
             "description": "Internal ID",
@@ -2512,11 +3019,22 @@
             "type": "boolean"
           },
           "hidden": {
-            "description": "If user and their stream is hidden from public streams (temporary)",
+            "description": "Hide user and their stream from public discovery",
+            "type": "boolean"
+          },
+          "chat_restricted": {
+            "description": "Whether this user is globally chat muted",
             "type": "boolean"
           },
           "following": {
-            "description": "Request only: IDs of streamers this user is following",
+            "description": "Request only: Other users this user is following",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "following_ids": {
+            "description": "Request only: IDs of other users this user is following",
             "type": "array",
             "items": {
               "type": "string"
@@ -2526,7 +3044,10 @@
       },
       "SocialLink": {
         "type": "object",
-        "required": ["link", "title"],
+        "required": [
+          "link",
+          "title"
+        ],
         "properties": {
           "title": {
             "type": "string",
@@ -2542,7 +3063,9 @@
       },
       "Category": {
         "type": "object",
-        "required": ["title"],
+        "required": [
+          "title"
+        ],
         "properties": {
           "_id": {
             "description": "Internal ID",
@@ -2567,7 +3090,11 @@
       "Ban": {
         "description": "Represenation of a chat ban on Lightspeed",
         "type": "object",
-        "required": ["mod_id", "stream_id", "user_id"],
+        "required": [
+          "mod_id",
+          "stream_id",
+          "user_id"
+        ],
         "properties": {
           "_id": {
             "description": "Internal ID",
@@ -2619,7 +3146,9 @@
       "DataCreateUser": {
         "title": "User Data",
         "type": "object",
-        "required": ["username"],
+        "required": [
+          "username"
+        ],
         "properties": {
           "username": {
             "description": "Username",
@@ -2671,13 +3200,25 @@
             "maxLength": 24,
             "minLength": 0,
             "nullable": true
+          },
+          "hidden": {
+            "description": "Whether to hide the user and stream from public discovery",
+            "type": "boolean",
+            "nullable": true
+          },
+          "chat_restricted": {
+            "description": "Whether to restrict the user from chatting globally",
+            "type": "boolean",
+            "nullable": true
           }
         }
       },
       "BanInformation": {
         "description": "Information about a user's ban on Lightspeed",
         "type": "object",
-        "required": ["stream_id"],
+        "required": [
+          "stream_id"
+        ],
         "properties": {
           "stream_id": {
             "description": "Stream ID",
@@ -2697,7 +3238,10 @@
       "DataCreateCategory": {
         "title": "Category Data",
         "type": "object",
-        "required": ["description", "title"],
+        "required": [
+          "description",
+          "title"
+        ],
         "properties": {
           "title": {
             "description": "Category title",
@@ -2737,7 +3281,11 @@
       },
       "Message": {
         "type": "object",
-        "required": ["author_id", "content", "stream_id"],
+        "required": [
+          "author_id",
+          "content",
+          "stream_id"
+        ],
         "properties": {
           "_id": {
             "description": "Internal ID",
@@ -2770,7 +3318,9 @@
       "DataSendMessage": {
         "title": "Message Data",
         "type": "object",
-        "required": ["content"],
+        "required": [
+          "content"
+        ],
         "properties": {
           "content": {
             "description": "Message content",
@@ -2780,16 +3330,54 @@
           }
         }
       },
-      "RAuth Error": {
+      "DataCreateInvite": {
+        "title": "Invite Data",
+        "type": "object",
+        "required": [
+          "code"
+        ],
+        "properties": {
+          "code": {
+            "description": "Invite code",
+            "type": "string"
+          }
+        }
+      },
+      "InviteInformation": {
+        "description": "Invite Information\n\nNewtype to avoid errors with schemas",
+        "type": "object",
+        "required": [
+          "id",
+          "used"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "used": {
+            "type": "boolean"
+          },
+          "claimed_by": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Authifier Error": {
         "title": "Error",
         "oneOf": [
           {
             "type": "object",
-            "required": ["type", "with"],
+            "required": [
+              "type",
+              "with"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["IncorrectData"]
+                "enum": [
+                  "IncorrectData"
+                ]
               },
               "with": {
                 "type": "string"
@@ -2798,11 +3386,17 @@
           },
           {
             "type": "object",
-            "required": ["operation", "type", "with"],
+            "required": [
+              "operation",
+              "type",
+              "with"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["DatabaseError"]
+                "enum": [
+                  "DatabaseError"
+                ]
               },
               "operation": {
                 "type": "string"
@@ -2814,201 +3408,267 @@
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["InternalError"]
+                "enum": [
+                  "InternalError"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["OperationFailed"]
+                "enum": [
+                  "OperationFailed"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["RenderFail"]
+                "enum": [
+                  "RenderFail"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["MissingHeaders"]
+                "enum": [
+                  "MissingHeaders"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["CaptchaFailed"]
+                "enum": [
+                  "CaptchaFailed"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["InvalidSession"]
+                "enum": [
+                  "InvalidSession"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["UnverifiedAccount"]
+                "enum": [
+                  "UnverifiedAccount"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["UnknownUser"]
+                "enum": [
+                  "UnknownUser"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["EmailFailed"]
+                "enum": [
+                  "EmailFailed"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["InvalidToken"]
+                "enum": [
+                  "InvalidToken"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["MissingInvite"]
+                "enum": [
+                  "MissingInvite"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["InvalidInvite"]
+                "enum": [
+                  "InvalidInvite"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["InvalidCredentials"]
+                "enum": [
+                  "InvalidCredentials"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["CompromisedPassword"]
+                "enum": [
+                  "CompromisedPassword"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["DisabledAccount"]
+                "enum": [
+                  "ShortPassword"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["ShortPassword"]
+                "enum": [
+                  "Blacklisted"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["Blacklisted"]
+                "enum": [
+                  "LockedOut"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["LockedOut"]
+                "enum": [
+                  "TotpAlreadyEnabled"
+                ]
               }
             }
           },
           {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["TotpAlreadyEnabled"]
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": ["type"],
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": ["DisallowedMFAMethod"]
+                "enum": [
+                  "DisallowedMFAMethod"
+                ]
               }
             }
           }
@@ -3017,7 +3677,10 @@
       "DataCreateAccount": {
         "title": "Account Data",
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "description": "Valid email address",
@@ -3042,7 +3705,9 @@
       "DataResendVerification": {
         "title": "Resend Information",
         "type": "object",
-        "required": ["email"],
+        "required": [
+          "email"
+        ],
         "properties": {
           "email": {
             "description": "Email associated with the account",
@@ -3058,7 +3723,9 @@
       "DataAccountDeletion": {
         "title": "Account Deletion Token",
         "type": "object",
-        "required": ["token"],
+        "required": [
+          "token"
+        ],
         "properties": {
           "token": {
             "description": "Deletion token",
@@ -3068,7 +3735,10 @@
       },
       "AccountInfo": {
         "type": "object",
-        "required": ["_id", "email"],
+        "required": [
+          "_id",
+          "email"
+        ],
         "properties": {
           "_id": {
             "type": "string"
@@ -3081,7 +3751,10 @@
       "DataChangePassword": {
         "title": "Change Data",
         "type": "object",
-        "required": ["current_password", "password"],
+        "required": [
+          "current_password",
+          "password"
+        ],
         "properties": {
           "password": {
             "description": "New password",
@@ -3096,7 +3769,10 @@
       "DataChangeEmail": {
         "title": "Change Data",
         "type": "object",
-        "required": ["current_password", "email"],
+        "required": [
+          "current_password",
+          "email"
+        ],
         "properties": {
           "email": {
             "description": "Valid email address",
@@ -3115,7 +3791,9 @@
           },
           {
             "type": "object",
-            "required": ["ticket"],
+            "required": [
+              "ticket"
+            ],
             "properties": {
               "ticket": {
                 "description": "Authorised MFA ticket, can be used to log in",
@@ -3132,7 +3810,13 @@
       "MFATicket": {
         "description": "Multi-factor auth ticket",
         "type": "object",
-        "required": ["_id", "account_id", "authorised", "token", "validated"],
+        "required": [
+          "_id",
+          "account_id",
+          "authorised",
+          "token",
+          "validated"
+        ],
         "properties": {
           "_id": {
             "description": "Unique Id",
@@ -3164,7 +3848,10 @@
       "DataPasswordReset": {
         "title": "Password Reset",
         "type": "object",
-        "required": ["password", "token"],
+        "required": [
+          "password",
+          "token"
+        ],
         "properties": {
           "token": {
             "description": "Reset token",
@@ -3184,7 +3871,9 @@
       "DataSendPasswordReset": {
         "title": "Reset Information",
         "type": "object",
-        "required": ["email"],
+        "required": [
+          "email"
+        ],
         "properties": {
           "email": {
             "description": "Email associated with the account",
@@ -3202,11 +3891,19 @@
           {
             "description": "Session information",
             "type": "object",
-            "required": ["_id", "name", "result", "token", "user_id"],
+            "required": [
+              "_id",
+              "name",
+              "result",
+              "token",
+              "user_id"
+            ],
             "properties": {
               "result": {
                 "type": "string",
-                "enum": ["Success"]
+                "enum": [
+                  "Success"
+                ]
               },
               "_id": {
                 "description": "Unique Id",
@@ -3237,11 +3934,17 @@
           },
           {
             "type": "object",
-            "required": ["allowed_methods", "result", "ticket"],
+            "required": [
+              "allowed_methods",
+              "result",
+              "ticket"
+            ],
             "properties": {
               "result": {
                 "type": "string",
-                "enum": ["MFA"]
+                "enum": [
+                  "MFA"
+                ]
               },
               "ticket": {
                 "type": "string"
@@ -3253,13 +3956,35 @@
                 }
               }
             }
+          },
+          {
+            "type": "object",
+            "required": [
+              "result",
+              "user_id"
+            ],
+            "properties": {
+              "result": {
+                "type": "string",
+                "enum": [
+                  "Disabled"
+                ]
+              },
+              "user_id": {
+                "type": "string"
+              }
+            }
           }
         ]
       },
       "WebPushSubscription": {
         "description": "Web Push subscription",
         "type": "object",
-        "required": ["auth", "endpoint", "p256dh"],
+        "required": [
+          "auth",
+          "endpoint",
+          "p256dh"
+        ],
         "properties": {
           "endpoint": {
             "type": "string"
@@ -3275,14 +4000,21 @@
       "MFAMethod": {
         "description": "MFA method",
         "type": "string",
-        "enum": ["Password", "Recovery", "Totp"]
+        "enum": [
+          "Password",
+          "Recovery",
+          "Totp"
+        ]
       },
       "DataLogin": {
         "title": "Login Data",
         "anyOf": [
           {
             "type": "object",
-            "required": ["email", "password"],
+            "required": [
+              "email",
+              "password"
+            ],
             "properties": {
               "email": {
                 "description": "Email",
@@ -3301,7 +4033,9 @@
           },
           {
             "type": "object",
-            "required": ["mfa_ticket"],
+            "required": [
+              "mfa_ticket"
+            ],
             "properties": {
               "mfa_ticket": {
                 "description": "Unvalidated or authorised MFA ticket\n\nUsed to resolve the correct account",
@@ -3330,7 +4064,9 @@
         "anyOf": [
           {
             "type": "object",
-            "required": ["password"],
+            "required": [
+              "password"
+            ],
             "properties": {
               "password": {
                 "type": "string"
@@ -3339,7 +4075,9 @@
           },
           {
             "type": "object",
-            "required": ["recovery_code"],
+            "required": [
+              "recovery_code"
+            ],
             "properties": {
               "recovery_code": {
                 "type": "string"
@@ -3348,7 +4086,9 @@
           },
           {
             "type": "object",
-            "required": ["totp_code"],
+            "required": [
+              "totp_code"
+            ],
             "properties": {
               "totp_code": {
                 "type": "string"
@@ -3359,7 +4099,10 @@
       },
       "SessionInfo": {
         "type": "object",
-        "required": ["_id", "name"],
+        "required": [
+          "_id",
+          "name"
+        ],
         "properties": {
           "_id": {
             "type": "string"
@@ -3372,7 +4115,9 @@
       "DataEditSession": {
         "title": "Edit Data",
         "type": "object",
-        "required": ["friendly_name"],
+        "required": [
+          "friendly_name"
+        ],
         "properties": {
           "friendly_name": {
             "description": "Session friendly name",
@@ -3414,7 +4159,9 @@
       "ResponseTotpSecret": {
         "title": "Totp Secret",
         "type": "object",
-        "required": ["secret"],
+        "required": [
+          "secret"
+        ],
         "properties": {
           "secret": {
             "type": "string"

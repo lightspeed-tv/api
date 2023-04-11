@@ -41,6 +41,16 @@ export type APIRoutes =
 | { method: 'post', path: '-/chat/{target}/messages', parts: 3, params: paths['/chat/{target}/messages']['post']['requestBody']['content']['application/json'], response: paths['/chat/{target}/messages']['post']['responses']['200']['content']['application/json'] }
 | { method: 'delete', path: `/chat/${string}/messages/${string}`, parts: 4, params: undefined, response: undefined }
 | { method: 'delete', path: '-/chat/{target}/messages/{id}', parts: 4, params: undefined, response: undefined }
+| { method: 'get', path: `/admin/invites`, parts: 2, params: undefined, response: paths['/admin/invites']['get']['responses']['200']['content']['application/json'] }
+| { method: 'post', path: `/admin/invites`, parts: 2, params: paths['/admin/invites']['post']['requestBody']['content']['application/json'], response: undefined }
+| { method: 'delete', path: `/admin/invites/${string}`, parts: 3, params: undefined, response: undefined }
+| { method: 'delete', path: '-/admin/invites/{code}', parts: 3, params: undefined, response: undefined }
+| { method: 'patch', path: `/admin/streams/${string}`, parts: 3, params: paths['/admin/streams/{stream_id}']['patch']['requestBody']['content']['application/json'], response: paths['/admin/streams/{stream_id}']['patch']['responses']['200']['content']['application/json'] }
+| { method: 'patch', path: '-/admin/streams/{stream_id}', parts: 3, params: paths['/admin/streams/{stream_id}']['patch']['requestBody']['content']['application/json'], response: paths['/admin/streams/{stream_id}']['patch']['responses']['200']['content']['application/json'] }
+| { method: 'patch', path: `/admin/users/${string}`, parts: 3, params: paths['/admin/users/{user_id}']['patch']['requestBody']['content']['application/json'], response: paths['/admin/users/{user_id}']['patch']['responses']['200']['content']['application/json'] }
+| { method: 'patch', path: '-/admin/users/{user_id}', parts: 3, params: paths['/admin/users/{user_id}']['patch']['requestBody']['content']['application/json'], response: paths['/admin/users/{user_id}']['patch']['responses']['200']['content']['application/json'] }
+| { method: 'post', path: `/admin/streams/${string}/stop`, parts: 4, params: undefined, response: paths['/admin/streams/{stream_id}/stop']['post']['responses']['200']['content']['application/json'] }
+| { method: 'post', path: '-/admin/streams/{stream_id}/stop', parts: 4, params: undefined, response: paths['/admin/streams/{stream_id}/stop']['post']['responses']['200']['content']['application/json'] }
 | { method: 'post', path: `/auth/account/create`, parts: 3, params: paths['/auth/account/create']['post']['requestBody']['content']['application/json'], response: undefined }
 | { method: 'post', path: `/auth/account/reverify`, parts: 3, params: paths['/auth/account/reverify']['post']['requestBody']['content']['application/json'], response: undefined }
 | { method: 'put', path: `/auth/account/delete`, parts: 3, params: paths['/auth/account/delete']['put']['requestBody']['content']['application/json'], response: undefined }

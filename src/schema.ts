@@ -94,6 +94,28 @@ export interface paths {
     /** Delete a message from chat by its id. */
     delete: operations["delete_delete_message"];
   };
+  "/admin/invites": {
+    /** List all pending and used stream invites. */
+    get: operations["list_stream_invites_list_stream_invites"];
+    /** Create a new invite for streaming. */
+    post: operations["create_stream_invite_create_stream_invite"];
+  };
+  "/admin/invites/{code}": {
+    /** Delete an existing unclaimed stream invite. */
+    delete: operations["delete_stream_invite_delete_stream_invite"];
+  };
+  "/admin/streams/{stream_id}": {
+    /** Edit stream information. */
+    patch: operations["edit_stream_edit_stream"];
+  };
+  "/admin/users/{user_id}": {
+    /** Edit user information. */
+    patch: operations["edit_user_edit_user"];
+  };
+  "/admin/streams/{stream_id}/stop": {
+    /** Disconnect all users from a stream and stop it. */
+    post: operations["stop_stream_stop_stream"];
+  };
   "/auth/account/create": {
     /** Create a new account. */
     post: operations["create_account_create_account"];
@@ -187,6 +209,8 @@ export interface components {
     Region: {
       /** @description Internal ID */
       _id?: string | null;
+      /** @description Publicly accessible server hostname */
+      hostname?: string | null;
       /** @description URL to connect to this server's signaling service */
       signaling?: string | null;
       /** @description URI to connect to this server's ingest service */
@@ -247,6 +271,10 @@ export interface components {
       | {
           /** @enum {string} */
           type: "InternalError";
+        }
+      | {
+          /** @enum {string} */
+          type: "BadGateway";
         }
       | {
           /** @enum {string} */
@@ -321,6 +349,8 @@ export interface components {
        * @default true
        */
       record?: boolean;
+      /** @description Whether this stream is currently prohibited from going live */
+      suspended?: boolean;
       /** @description RTMP URL to relay the stream to */
       rtmp_relay?: string | null;
       /** @description Time at which the last stream ended */
@@ -362,6 +392,8 @@ export interface components {
       category?: string | null;
       /** @description RTMP Relay */
       rtmp_relay?: string | null;
+      /** @description Whether this stream is prohibited from going live */
+      suspended?: boolean | null;
     };
     /** @description Combined stream information */
     AggregateStream: {
@@ -400,10 +432,14 @@ export interface components {
       accent_colour?: string;
       /** @description Whether this user is privileged */
       privileged?: boolean;
-      /** @description If user and their stream is hidden from public streams (temporary) */
+      /** @description Hide user and their stream from public discovery */
       hidden?: boolean;
-      /** @description Request only: IDs of streamers this user is following */
-      following?: string[];
+      /** @description Whether this user is globally chat muted */
+      chat_restricted?: boolean;
+      /** @description Request only: Other users this user is following */
+      following?: components["schemas"]["User"][];
+      /** @description Request only: IDs of other users this user is following */
+      following_ids?: string[];
     };
     SocialLink: {
       title: string;
@@ -458,6 +494,10 @@ export interface components {
       social_links?: components["schemas"]["SocialLink"][] | null;
       /** @description Accent colour */
       accent_colour?: string | null;
+      /** @description Whether to hide the user and stream from public discovery */
+      hidden?: boolean | null;
+      /** @description Whether to restrict the user from chatting globally */
+      chat_restricted?: boolean | null;
     };
     /** @description Information about a user's ban on Lightspeed */
     BanInformation: {
@@ -501,8 +541,23 @@ export interface components {
       /** @description Message content */
       content: string;
     };
+    /** Invite Data */
+    DataCreateInvite: {
+      /** @description Invite code */
+      code: string;
+    };
+    /**
+     * @description Invite Information
+     *
+     * Newtype to avoid errors with schemas
+     */
+    InviteInformation: {
+      id: string;
+      used: boolean;
+      claimed_by?: string | null;
+    };
     /** Error */
-    "RAuth Error":
+    "Authifier Error":
       | {
           /** @enum {string} */
           type: "IncorrectData";
@@ -569,10 +624,6 @@ export interface components {
       | {
           /** @enum {string} */
           type: "CompromisedPassword";
-        }
-      | {
-          /** @enum {string} */
-          type: "DisabledAccount";
         }
       | {
           /** @enum {string} */
@@ -691,6 +742,11 @@ export interface components {
           result: "MFA";
           ticket: string;
           allowed_methods: components["schemas"]["MFAMethod"][];
+        }
+      | {
+          /** @enum {string} */
+          result: "Disabled";
+          user_id: string;
         };
     /** @description Web Push subscription */
     WebPushSubscription: {
@@ -1216,6 +1272,129 @@ export interface operations {
     responses: {
       /** Success */
       204: never;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** List all pending and used stream invites. */
+  list_stream_invites_list_stream_invites: {
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["InviteInformation"][];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Create a new invite for streaming. */
+  create_stream_invite_create_stream_invite: {
+    responses: {
+      200: unknown;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DataCreateInvite"];
+      };
+    };
+  };
+  /** Delete an existing unclaimed stream invite. */
+  delete_stream_invite_delete_stream_invite: {
+    parameters: {
+      path: {
+        code: string;
+      };
+    };
+    responses: {
+      200: unknown;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Edit stream information. */
+  edit_stream_edit_stream: {
+    parameters: {
+      path: {
+        stream_id: string;
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["Stream"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DataEditStream"];
+      };
+    };
+  };
+  /** Edit user information. */
+  edit_user_edit_user: {
+    parameters: {
+      path: {
+        user_id: string;
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["User"];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DataEditUser"];
+      };
+    };
+  };
+  /** Disconnect all users from a stream and stop it. */
+  stop_stream_stop_stream: {
+    parameters: {
+      path: {
+        stream_id: string;
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["Stream"];
+        };
+      };
       /** An error occurred. */
       default: {
         content: {

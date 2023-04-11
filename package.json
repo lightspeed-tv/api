@@ -1,6 +1,6 @@
 {
   "name": "lightspeed-api",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Lightspeed API Library",
   "main": "dist/index.js",
   "repository": "https://github.com/lightspeed-tv/api",
