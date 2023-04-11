@@ -112,6 +112,10 @@ export interface paths {
     /** Edit user information. */
     patch: operations["edit_user_edit_user"];
   };
+  "/admin/livestreams": {
+    /** Find all live streams regardless of if they're hidden */
+    get: operations["list_livestreams_list_livestreams"];
+  };
   "/admin/streams/{stream_id}/stop": {
     /** Disconnect all users from a stream and stop it. */
     post: operations["stop_stream_stop_stream"];
@@ -1379,6 +1383,16 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["DataEditUser"];
+      };
+    };
+  };
+  /** Find all live streams regardless of if they're hidden */
+  list_livestreams_list_livestreams: {
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["AggregateStream"][];
+        };
       };
     };
   };

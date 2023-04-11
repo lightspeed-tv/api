@@ -1374,6 +1374,31 @@
         ]
       }
     },
+    "/admin/livestreams": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "List currently live streams",
+        "description": "Find all live streams regardless of if they're hidden",
+        "operationId": "list_livestreams_list_livestreams",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AggregateStream"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/admin/streams/{stream_id}/stop": {
       "post": {
         "tags": [
