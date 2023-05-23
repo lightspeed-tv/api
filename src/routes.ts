@@ -14,7 +14,7 @@ export type APIRoutes =
 | { method: 'put', path: `/streams/${string}/bans/${string}`, parts: 4, params: paths['/streams/{stream_id}/bans/{user_id}']['put']['requestBody']['content']['application/json'], response: paths['/streams/{stream_id}/bans/{user_id}']['put']['responses']['200']['content']['application/json'] }
 | { method: 'put', path: '-/streams/{stream_id}/bans/{user_id}', parts: 4, params: paths['/streams/{stream_id}/bans/{user_id}']['put']['requestBody']['content']['application/json'], response: paths['/streams/{stream_id}/bans/{user_id}']['put']['responses']['200']['content']['application/json'] }
 | { method: 'delete', path: `/streams/${string}/bans/${string}`, parts: 4, params: undefined, response: undefined }
-| { method: 'delete', path: '-/streams/{target}/bans/{id}', parts: 4, params: undefined, response: undefined }
+| { method: 'delete', path: '-/streams/{stream_id}/bans/{user_id}', parts: 4, params: undefined, response: undefined }
 | { method: 'put', path: `/streams/${string}/follow`, parts: 3, params: undefined, response: undefined }
 | { method: 'put', path: '-/streams/{target}/follow', parts: 3, params: undefined, response: undefined }
 | { method: 'delete', path: `/streams/${string}/follow`, parts: 3, params: undefined, response: undefined }

@@ -282,10 +282,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Ban"
-                  }
+                  "$ref": "#/components/schemas/ResponseBanList"
                 }
               }
             }
@@ -398,9 +395,7 @@
             "Api Key": []
           }
         ]
-      }
-    },
-    "/streams/{target}/bans/{id}": {
+      },
       "delete": {
         "tags": [
           "Moderation"
@@ -410,7 +405,7 @@
         "operationId": "pardon_pardon_user",
         "parameters": [
           {
-            "name": "target",
+            "name": "stream_id",
             "in": "path",
             "required": true,
             "schema": {
@@ -418,7 +413,7 @@
             }
           },
           {
-            "name": "id",
+            "name": "user_id",
             "in": "path",
             "required": true,
             "schema": {
@@ -3109,6 +3104,30 @@
           "description": {
             "description": "Category description",
             "type": "string"
+          }
+        }
+      },
+      "ResponseBanList": {
+        "title": "Ban List",
+        "type": "object",
+        "required": [
+          "bans",
+          "users"
+        ],
+        "properties": {
+          "bans": {
+            "description": "Bans",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ban"
+            }
+          },
+          "users": {
+            "description": "Users",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
           }
         }
       },

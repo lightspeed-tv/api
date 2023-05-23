@@ -39,8 +39,6 @@ export interface paths {
   "/streams/{stream_id}/bans/{user_id}": {
     /** Permanently ban a user from talking. */
     put: operations["ban_ban_user"];
-  };
-  "/streams/{target}/bans/{id}": {
     /** Unban a user. */
     delete: operations["pardon_pardon_user"];
   };
@@ -458,6 +456,13 @@ export interface components {
       cover?: string | null;
       /** @description Category description */
       description?: string;
+    };
+    /** Ban List */
+    ResponseBanList: {
+      /** @description Bans */
+      bans: components["schemas"]["Ban"][];
+      /** @description Users */
+      users: components["schemas"]["User"][];
     };
     /** @description Represenation of a chat ban on Lightspeed */
     Ban: {
@@ -989,8 +994,8 @@ export interface operations {
   pardon_pardon_user: {
     parameters: {
       path: {
-        target: string;
-        id: string;
+        stream_id: string;
+        user_id: string;
       };
     };
     responses: {

@@ -12,6 +12,7 @@ export type AggregateStream = components['schemas']['AggregateStream'];
 export type User = components['schemas']['User'];
 export type SocialLink = components['schemas']['SocialLink'];
 export type Category = components['schemas']['Category'];
+export type ResponseBanList = components['schemas']['ResponseBanList'];
 export type Ban = components['schemas']['Ban'];
 export type DataBanUser = components['schemas']['DataBanUser'];
 export type DataCreateUser = components['schemas']['DataCreateUser'];
