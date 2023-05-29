@@ -32,6 +32,10 @@ export interface paths {
     /** Fetch all banned users in a stream */
     get: operations["fetch_bans_fetch_bans"];
   };
+  "/streams/{path}/moderators": {
+    /** Fetch all moderator information for stream */
+    get: operations["fetch_moderators_fetch_moderators"];
+  };
   "/streams/reset_token": {
     /** Reset the token used for this account's stream. */
     post: operations["reset_token_reset"];
@@ -117,6 +121,10 @@ export interface paths {
   "/admin/streams/{stream_id}/stop": {
     /** Disconnect all users from a stream and stop it. */
     post: operations["stop_stream_stop_stream"];
+  };
+  "/reports/send": {
+    /** Report something to Lightspeed. */
+    post: operations["send_report_send_report"];
   };
   "/auth/account/create": {
     /** Create a new account. */
@@ -539,11 +547,24 @@ export interface components {
       /** @description Stream ID */
       stream_id: string;
       /** @description User */
-      author?: components["schemas"]["User"] | null;
+      author?: components["schemas"]["UserInformation"] | null;
       /** @description User ID */
       author_id: string;
       /** @description Message content */
       content: string;
+    };
+    /** @description Minimal information to display user in chat or similar location */
+    UserInformation: {
+      /** @description User ID */
+      id: string;
+      /** @description Path at which this user is accessible */
+      path: string;
+      /** @description Case-sensitive username */
+      username: string;
+      /** @description ID of avatar file */
+      avatar?: string | null;
+      /** @description Accent Colour */
+      accent_colour?: string;
     };
     /** Message Data */
     DataSendMessage: {
@@ -565,6 +586,27 @@ export interface components {
       used: boolean;
       claimed_by?: string | null;
     };
+    /** Report Data */
+    DataReportContent: {
+      /** @description Content to report */
+      content: components["schemas"]["ReportedContent"];
+      /** @description Report description */
+      reason: string;
+    };
+    /** @description The content being reported */
+    ReportedContent:
+      | {
+          /** @enum {string} */
+          type: "Stream";
+          /** @description Path to stream */
+          path: string;
+        }
+      | {
+          /** @enum {string} */
+          type: "User";
+          /** @description ID of the user */
+          id: string;
+        };
     /** Error */
     "Authifier Error":
       | {
@@ -937,6 +979,27 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["BanInformation"][];
+        };
+      };
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  /** Fetch all moderator information for stream */
+  fetch_moderators_fetch_moderators: {
+    parameters: {
+      path: {
+        path: string;
+      };
+    };
+    responses: {
+      200: {
+        content: {
+          "application/json": components["schemas"]["User"][];
         };
       };
       /** An error occurred. */
@@ -1419,6 +1482,23 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["Error"];
         };
+      };
+    };
+  };
+  /** Report something to Lightspeed. */
+  send_report_send_report: {
+    responses: {
+      200: unknown;
+      /** An error occurred. */
+      default: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DataReportContent"];
       };
     };
   };

@@ -251,7 +251,7 @@
     "/streams/{path}/bans": {
       "get": {
         "tags": [
-          "Users"
+          "Streams"
         ],
         "summary": "Fetch Bans",
         "description": "Fetch all banned users in a stream",
@@ -283,6 +283,56 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseBanList"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/streams/{path}/moderators": {
+      "get": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "Fetch Moderators",
+        "description": "Fetch all moderator information for stream",
+        "operationId": "fetch_moderators_fetch_moderators",
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
                 }
               }
             }
@@ -1432,6 +1482,46 @@
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "Api Key": []
+          }
+        ]
+      }
+    },
+    "/reports/send": {
+      "post": {
+        "tags": [
+          "Reporting"
+        ],
+        "summary": "Report Content",
+        "description": "Report something to Lightspeed.",
+        "operationId": "send_report_send_report",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataReportContent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": ""
           }
         },
         "security": [
@@ -3344,7 +3434,7 @@
             "description": "User",
             "allOf": [
               {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserInformation"
               }
             ],
             "nullable": true
@@ -3355,6 +3445,38 @@
           },
           "content": {
             "description": "Message content",
+            "type": "string"
+          }
+        }
+      },
+      "UserInformation": {
+        "description": "Minimal information to display user in chat or similar location",
+        "type": "object",
+        "required": [
+          "id",
+          "path",
+          "username"
+        ],
+        "properties": {
+          "id": {
+            "description": "User ID",
+            "type": "string"
+          },
+          "path": {
+            "description": "Path at which this user is accessible",
+            "type": "string"
+          },
+          "username": {
+            "description": "Case-sensitive username",
+            "type": "string"
+          },
+          "avatar": {
+            "description": "ID of avatar file",
+            "type": "string",
+            "nullable": true
+          },
+          "accent_colour": {
+            "description": "Accent Colour",
             "type": "string"
           }
         }
@@ -3406,6 +3528,75 @@
             "nullable": true
           }
         }
+      },
+      "DataReportContent": {
+        "title": "Report Data",
+        "type": "object",
+        "required": [
+          "content",
+          "reason"
+        ],
+        "properties": {
+          "content": {
+            "description": "Content to report",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ReportedContent"
+              }
+            ]
+          },
+          "reason": {
+            "description": "Report description",
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 0
+          }
+        }
+      },
+      "ReportedContent": {
+        "description": "The content being reported",
+        "oneOf": [
+          {
+            "description": "Report a stream",
+            "type": "object",
+            "required": [
+              "path",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "Stream"
+                ]
+              },
+              "path": {
+                "description": "Path to stream",
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Report a user",
+            "type": "object",
+            "required": [
+              "id",
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "User"
+                ]
+              },
+              "id": {
+                "description": "ID of the user",
+                "type": "string"
+              }
+            }
+          }
+        ]
       },
       "Authifier Error": {
         "title": "Error",

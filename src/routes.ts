@@ -10,6 +10,8 @@ export type APIRoutes =
 | { method: 'get', path: '-/streams/{path}', parts: 2, params: undefined, response: paths['/streams/{path}']['get']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: `/streams/${string}/bans`, parts: 3, params: undefined, response: paths['/streams/{path}/bans']['get']['responses']['200']['content']['application/json'] }
 | { method: 'get', path: '-/streams/{path}/bans', parts: 3, params: undefined, response: paths['/streams/{path}/bans']['get']['responses']['200']['content']['application/json'] }
+| { method: 'get', path: `/streams/${string}/moderators`, parts: 3, params: undefined, response: paths['/streams/{path}/moderators']['get']['responses']['200']['content']['application/json'] }
+| { method: 'get', path: '-/streams/{path}/moderators', parts: 3, params: undefined, response: paths['/streams/{path}/moderators']['get']['responses']['200']['content']['application/json'] }
 | { method: 'post', path: `/streams/reset_token`, parts: 2, params: undefined, response: paths['/streams/reset_token']['post']['responses']['200']['content']['application/json'] }
 | { method: 'put', path: `/streams/${string}/bans/${string}`, parts: 4, params: paths['/streams/{stream_id}/bans/{user_id}']['put']['requestBody']['content']['application/json'], response: paths['/streams/{stream_id}/bans/{user_id}']['put']['responses']['200']['content']['application/json'] }
 | { method: 'put', path: '-/streams/{stream_id}/bans/{user_id}', parts: 4, params: paths['/streams/{stream_id}/bans/{user_id}']['put']['requestBody']['content']['application/json'], response: paths['/streams/{stream_id}/bans/{user_id}']['put']['responses']['200']['content']['application/json'] }
@@ -52,6 +54,7 @@ export type APIRoutes =
 | { method: 'get', path: `/admin/livestreams`, parts: 2, params: undefined, response: paths['/admin/livestreams']['get']['responses']['200']['content']['application/json'] }
 | { method: 'post', path: `/admin/streams/${string}/stop`, parts: 4, params: undefined, response: paths['/admin/streams/{stream_id}/stop']['post']['responses']['200']['content']['application/json'] }
 | { method: 'post', path: '-/admin/streams/{stream_id}/stop', parts: 4, params: undefined, response: paths['/admin/streams/{stream_id}/stop']['post']['responses']['200']['content']['application/json'] }
+| { method: 'post', path: `/reports/send`, parts: 2, params: paths['/reports/send']['post']['requestBody']['content']['application/json'], response: undefined }
 | { method: 'post', path: `/auth/account/create`, parts: 3, params: paths['/auth/account/create']['post']['requestBody']['content']['application/json'], response: undefined }
 | { method: 'post', path: `/auth/account/reverify`, parts: 3, params: paths['/auth/account/reverify']['post']['requestBody']['content']['application/json'], response: undefined }
 | { method: 'put', path: `/auth/account/delete`, parts: 3, params: paths['/auth/account/delete']['put']['requestBody']['content']['application/json'], response: undefined }
